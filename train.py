@@ -1,7 +1,6 @@
 from source.load_dataset import Local_dataset
 import os
 from torch.utils.data import DataLoader
-import visdom
 from torchvision.models import resnet34
 import torch.nn as nn
 import torch
@@ -12,10 +11,6 @@ learn_rate = 0.001
 num_epochs = 100
 log_dir = "runs/exp1"
 
-
-def view_img(img):
-    vis = visdom.Visdom()
-    vis.images(img, win="batch_imgs", opts=dict(title='Random Image'))
 
 def main():
     # get dataset
