@@ -1,0 +1,11 @@
+<!--pages/upload/upload.wxml-->
+<view class="container">
+  <button bindtap="chooseImage">选择图片</button>
+
+  <view wx:if="{{imagePath}}" class="preview">
+    <image src="{{imagePath}}" mode="aspectFit" class="image"></image>
+    <view class="result">
+      {{resultText}}
+    </view>
+  </view>
+</view>

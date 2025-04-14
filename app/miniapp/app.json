@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "pages/upload/upload"
+  ],
+  "window": {
+    "navigationBarTitleText": "中药图片识别",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff"
+  }
+}
