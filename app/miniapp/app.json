@@ -6,5 +6,6 @@
     "navigationBarTitleText": "中药图片识别",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff"
-  }
+  },
+  "lazyCodeLoading": "requiredComponents"
 }

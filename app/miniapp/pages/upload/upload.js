@@ -22,7 +22,7 @@ Page({
 
   uploadImage(filePath) {
     wx.uploadFile({
-      url: 'http://127.0.0.1:5000/predict', // 替换为你的后端接口地址
+      url: 'https://www.njwjxy.cn/predict', // 替换为你的后端接口地址
       filePath: filePath,
       name: 'file',
       success: (res) => {
