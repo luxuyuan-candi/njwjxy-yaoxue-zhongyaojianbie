@@ -5,6 +5,7 @@ import json
 from flask import Flask, request, jsonify
 from PIL import Image
 import io
+import requests
 
 # 加载模型
 work_dir = os.getcwd()
@@ -23,6 +24,10 @@ transformer = transforms.Compose([
 class_path = work_dir + '/model/class.json'
 with open(class_path, 'r', encoding='utf-8') as f:
     class_labels = json.load(f)
+
+convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
+with open(convert_path, 'r', encoding='utf-8') as f:
+    convert_dict = json.load(f)
 
 # 定义后端服务
 app = Flask(__name__)
@@ -49,15 +54,28 @@ def predict():
         with torch.no_grad():
             outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
-        
+
+        question = convert_dict[class_labels[str(predicted.item())]]
+        url = "http://localhost:8000/desc/invoke"
+        data = {
+            "input": {
+                "question": question
+            }
+        }
+        headers = {
+            "Content-Type": "application/json"
+        }
+        res = requests.post(url, json=data, headers=headers)
+
+        print(res)
         # 返回结果
         result = {
             'class_id': predicted.item(),
-            'class_name': class_labels[str(predicted.item())],
-            'confidence': torch.nn.functional.softmax(outputs, dim=1)[0][predicted.item()].item()
+            'class_name': convert_dict[class_labels[str(predicted.item())]],
+            'confidence': torch.nn.functional.softmax(outputs, dim=1)[0][predicted.item()].item(),
+            'content': res.json()['output']
         }
-
-        return jsonify(result)
+        return jsonify(result), 200
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
