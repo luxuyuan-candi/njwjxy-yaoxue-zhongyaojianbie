@@ -5,7 +5,8 @@
   <view wx:if="{{imagePath}}" class="preview">
     <image src="{{imagePath}}" mode="aspectFit" class="image"></image>
     <view class="result">
-      {{resultText}}
+      <text style="font-weight: bold; display: block;">{{className}}</text>
+      <text decode="{{true}}">{{resultText}}</text>
     </view>
   </view>
 </view>
