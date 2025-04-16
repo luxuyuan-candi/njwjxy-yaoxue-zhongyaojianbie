@@ -1,7 +1,8 @@
 Page({
   data: {
     imagePath: '',
-    resultText: ''
+    resultText: '',
+    className: ''
   },
 
   chooseImage() {
@@ -13,7 +14,8 @@ Page({
         const filePath = res.tempFiles[0].tempFilePath;
         this.setData({
           imagePath: filePath,
-          resultText: '分析中...'
+          resultText: '分析中...',
+          className: ''
         });
         this.uploadImage(filePath);
       }
@@ -28,12 +30,14 @@ Page({
       success: (res) => {
         const data = JSON.parse(res.data);
         this.setData({
-          resultText: data.class_name || '未返回结果'
+          className: data.class_name || '未返回结果',
+          resultText: data.content || '未返回结果'
         });
       },
       fail: () => {
         this.setData({
-          resultText: '上传失败，请重试'
+          resultText: '上传失败，请重试',
+          className: ''
         });
       }
     });
