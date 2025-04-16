@@ -10,7 +10,7 @@ model = ChatOllama(model='deepseek-r1:7b')
 
 # 创建prompt
 prompt = ChatPromptTemplate.from_messages([
-    ('system', '你现在是一名中药专家，根据我提问的中药菜，给出其鉴别特性、所属科名、入药部位、全部功效。'),
+    ('system', '你现在是一名中药专家，根据我提问的中药材，结合中国药典的内容，给出其鉴别特性、所属科名、入药部位、全部功效。'),
     ('user', '{question}')
 ])
 
