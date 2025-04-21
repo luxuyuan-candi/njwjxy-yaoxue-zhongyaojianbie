@@ -35,11 +35,11 @@ app = Flask(__name__)
 def predict():
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
-    
+
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-    
+
     try:
         # 读取并处理图像
         image_bytes = file.read()
@@ -56,10 +56,11 @@ def predict():
             _, predicted = torch.max(outputs.data, 1)
 
         question = convert_dict[class_labels[str(predicted.item())]]
-        url = "http://localhost:8000/desc/invoke"
+        url = "http://10.241.24.121:8001/chat/invoke"
         data = {
             "input": {
-                "question": question
+                "input": "结合中国药典，给出#"+question+"#鉴别特性、所属科名、入药部位、全部功效。以普通文本格式输出。",
+                "user_id": "luweike_init"
             }
         }
         headers = {
@@ -73,12 +74,40 @@ def predict():
             'class_id': predicted.item(),
             'class_name': convert_dict[class_labels[str(predicted.item())]],
             'confidence': torch.nn.functional.softmax(outputs, dim=1)[0][predicted.item()].item(),
-            'content': res.json()['output']
+            'content': res.json()['output']['output']
         }
         return jsonify(result), 200
-    
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    print("收到的数据:", data)
+
+    input_content = data.get('input')
+    try:
+        input_content = input_content.get('input')
+        url = "http://10.241.24.121:8001/chat/invoke"
+        data = {
+            "input": {
+                "input": input_content,
+                "user_id": "luweike_init"
+            }
+        }
+        headers = {
+            "Content-Type": "application/json"
+        }
+        res =  requests.post(url, json=data, headers=headers)
+        print(res.json())
+        result = {
+            'output': res.json()['output']['output']
+        }
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

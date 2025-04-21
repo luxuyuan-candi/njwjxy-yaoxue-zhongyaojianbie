@@ -5,12 +5,27 @@
     👋 你好，我是钟小药👦，我可以识别中药图片，请点击➕按钮开始识别。
   </view>
   <button class="floating-upload-right-btn" bindtap="chooseImage">＋</button>
-  <button class="floating-question-left-btn" bindtap="questionsGet">?</button>
+  <button wx:if="{{resultText && resultText !== '未返回结果' && resultText !== '上传失败，请重试' && resultText !== '分析中...'}}" class="floating-question-left-btn" bindtap="questionsGet">?</button>
+  <button wx:else class="floating-question-left-btn" bindtap="questionsGet" disabled>?</button>
   <view wx:if="{{imagePath}}" class="preview">
     <image src="{{imagePath}}" mode="aspectFit" class="image"></image>
     <view class="result">
       <text style="font-weight: bold; display: block;">{{className}}</text>
-      <text decode="{{true}}">{{resultText}}</text>
+      <view style="height: 2px; background-color: white; width: 100%;"></view>
+      <view wx:if="{{isQuireMode}}">
+        <text decode="{{true}}">{{resultText}}</text>
+        <text>\n\n\n\n\n</text>
+      </view>
+    </view>
+    <view wx:if="{{!isQuireMode}}" class="question-answer">
+      <text decode="{{true}}"
+      class="llm-answer">{{requestContent}}</text>
+      <view style="height: 2px; background-color: white; width: 100%;"></view>
+      <input value="{{answer}}" placeholder="输入答案" bindinput="handleInput" class="input-answer"/>
+      <view style="height: 2px; background-color: white; width: 100%;"></view>
+      <text decode="{{true}}" class="llm-answer">{{answerContent}}</text>
+      <button wx:if="{{!isSubmit}}" bindtap="submitAnswer">提交</button>
+      <button wx:else bindtap="resetAnswer">再问</button>
       <text>\n\n\n\n\n</text>
     </view>
   </view>
