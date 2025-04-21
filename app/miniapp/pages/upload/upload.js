@@ -21,7 +21,8 @@ Page({
       }
     });
   },
-
+  questionsGet() {
+  },
   uploadImage(filePath) {
     wx.uploadFile({
       url: 'https://www.njwjxy.cn/predict', // 替换为你的后端接口地址

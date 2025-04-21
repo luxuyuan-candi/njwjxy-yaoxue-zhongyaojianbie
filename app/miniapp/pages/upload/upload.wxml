@@ -1,12 +1,17 @@
 <!--pages/upload/upload.wxml-->
 <view class="container">
-  <button bindtap="chooseImage">选择图片</button>
-
+  <image src="/images/background-upload.jpg" mode="aspectFill" class="background-image"></image>
+  <view class="description">
+    👋 你好，我是钟小药👦，我可以识别中药图片，请点击➕按钮开始识别。
+  </view>
+  <button class="floating-upload-right-btn" bindtap="chooseImage">＋</button>
+  <button class="floating-question-left-btn" bindtap="questionsGet">?</button>
   <view wx:if="{{imagePath}}" class="preview">
     <image src="{{imagePath}}" mode="aspectFit" class="image"></image>
     <view class="result">
       <text style="font-weight: bold; display: block;">{{className}}</text>
       <text decode="{{true}}">{{resultText}}</text>
+      <text>\n\n\n\n\n</text>
     </view>
   </view>
 </view>

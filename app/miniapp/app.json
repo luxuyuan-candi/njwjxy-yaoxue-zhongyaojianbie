@@ -3,9 +3,9 @@
     "pages/upload/upload"
   ],
   "window": {
-    "navigationBarTitleText": "中药图片识别",
+    "navigationBarTitleText": "钟小药",
     "navigationBarTextStyle": "black",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarBackgroundColor": "#f8f8f8"
   },
   "lazyCodeLoading": "requiredComponents"
 }
