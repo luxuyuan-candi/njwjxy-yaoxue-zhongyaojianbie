@@ -1,0 +1,8 @@
+<view class="container">
+  <button wx:if="{{!hasUserInfo}}" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">选择头像</button>
+
+  <view wx:if="{{hasUserInfo}}">
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <text class="nickname">{{nickname}}</text>
+  </view>
+</view>

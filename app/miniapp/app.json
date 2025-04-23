@@ -1,11 +1,32 @@
 {
   "pages": [
-    "pages/upload/upload"
+    "pages/upload/upload",
+    "pages/index/index"
   ],
   "window": {
     "navigationBarTitleText": "钟小药",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/upload/upload",
+        "text": "识别",
+        "iconPath": "images/upload.png",
+        "selectedIconPath": "images/upload-selected.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index-selected.png"
+      }
+    ],
+    "color": "#999",
+    "selectedColor": "#007aff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black"
   },
   "lazyCodeLoading": "requiredComponents"
 }

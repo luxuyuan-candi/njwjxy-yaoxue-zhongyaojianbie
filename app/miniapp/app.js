@@ -1,9 +1,24 @@
 App({
+  globalData: {
+    openid: null,
+    userInfo: null
+  },
   onLaunch() {
-    console.log('App Launch');
-    const logs = wx.getStorageSync('logs') || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync('logs', logs);
+    wx.login({
+      success: res => {
+        if (res.code) {
+          wx.request({
+            url: 'https://www.njwjxy.cn/wx-login',
+            method: 'POST',
+            data: { code: res.code },
+            success: result => {
+              this.globalData.openid = result.data.openid
+              console.log('openid 已保存：', this.globalData.openid)
+            }
+          })
+        }
+      }
+    })
   },
 
   onShow() {

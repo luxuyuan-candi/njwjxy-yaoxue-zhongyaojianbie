@@ -29,6 +29,9 @@ convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
 with open(convert_path, 'r', encoding='utf-8') as f:
     convert_dict = json.load(f)
 
+APPID = 'wxa4c6a5aa471f6f75'
+APPSECRET = 'fcc409ab536a04f022c7e46aa889668b'
+
 # 定义后端服务
 app = Flask(__name__)
 @app.route('/predict', methods=['POST'])
@@ -37,8 +40,9 @@ def predict():
         return jsonify({'error': 'No file uploaded'}), 400
 
     file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+    user_id = request.form.get('openid')
+    if file.filename == '' or user_id == '':
+        return jsonify({'error': 'No selected file OR No openid'}), 400
 
     try:
         # 读取并处理图像
@@ -60,7 +64,7 @@ def predict():
         data = {
             "input": {
                 "input": "结合中国药典，给出#"+question+"#鉴别特性、所属科名、入药部位、全部功效。以普通文本格式输出。",
-                "user_id": "luweike_init"
+                "user_id": user_id
             }
         }
         headers = {
@@ -86,14 +90,17 @@ def chat():
     data = request.get_json()
     print("收到的数据:", data)
 
+    data = data.get('input')
     input_content = data.get('input')
+    user_id = data.get('openid')
+    if user_id == '':
+        return jsonify({'error': ' No openid'}), 400
     try:
-        input_content = input_content.get('input')
         url = "http://10.241.24.121:8001/chat/invoke"
         data = {
             "input": {
                 "input": input_content,
-                "user_id": "luweike_init"
+                "user_id": user_id
             }
         }
         headers = {
@@ -108,6 +115,31 @@ def chat():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/wx-login', methods=['POST'])
+def wx_login():
+    data = request.json
+    code = data.get('code')
+
+    if not code:
+        return jsonify({'error': 'Missing code'}), 400
+
+    url = (
+        f'https://api.weixin.qq.com/sns/jscode2session'
+        f'?appid={APPID}&secret={APPSECRET}&js_code={code}&grant_type=authorization_code'
+    )
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        if 'openid' in data:
+            return jsonify({
+                'openid': data['openid'],
+                'session_key': data['session_key']
+            })
+        else:
+            return jsonify({'error': 'WeChat API error', 'detail': data}), 500
+    except Exception as e:
+        return jsonify({'error':'Server error', 'message':str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

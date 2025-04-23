@@ -1,0 +1,11 @@
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin: 20rpx auto;
+}
+.nickname {
+  font-size: 32rpx;
+  text-align: center;
+  color: #333;
+}

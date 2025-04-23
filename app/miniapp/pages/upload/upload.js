@@ -29,7 +29,8 @@ Page({
   questionsGet() {
     const jsonData = {
       input: {
-        input: "根据上述内容，请出一道不同的选择题， 然后我来作答，你判断是否正确。"
+        input: "根据上述内容，请出一道不同的选择题， 然后我来作答，你判断是否正确。",
+        openid: getApp().globalData.openid
       }
     };
     this.setData({
@@ -69,6 +70,9 @@ Page({
       url: 'https://www.njwjxy.cn/predict', // 替换为你的后端接口地址
       filePath: filePath,
       name: 'file',
+      formData: {
+        openid: getApp().globalData.openid
+      },
       success: (res) => {
         const data = JSON.parse(res.data);
         this.setData({
@@ -92,7 +96,8 @@ Page({
   submitAnswer() {
     const jsonData = {
       input: {
-        input: this.data.answer
+        input: this.data.answer,
+        openid: getApp().globalData.openid
       }
     };
     this.setData({
