@@ -18,5 +18,11 @@ spec:
         - name: {{ .Release.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: APPSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: appsecret
+                  key: APPSECRET 
           ports:
             - containerPort: {{ .Values.containerPort }}

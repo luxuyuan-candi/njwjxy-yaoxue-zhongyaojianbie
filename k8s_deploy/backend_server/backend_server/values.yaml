@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "backendserver_1.0"
+  tag: "backendserver_4.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -11,3 +11,6 @@ service:
   nodePort: 30080
 
 containerPort: 5000
+
+secret:
+  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxx
