@@ -1,0 +1,15 @@
+architecture: standalone
+auth:
+  password: luweike
+master:
+  service:
+    nodePorts:
+      redis: "32000"
+    type: NodePort
+securityContext:
+  runAsGroup: 1001
+  runAsUser: 1001
+volumePermissions:
+  enabled: true
+  securityContext:
+    runAsUser: 0

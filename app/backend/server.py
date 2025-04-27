@@ -30,7 +30,7 @@ with open(convert_path, 'r', encoding='utf-8') as f:
     convert_dict = json.load(f)
 
 APPID = 'wxa4c6a5aa471f6f75'
-APPSECRET = 'fcc409ab536a04f022c7e46aa889668b'
+APPSECRET = 'xxxxxxxxxxxxxxxxxxxxxxxx'
 
 # 定义后端服务
 app = Flask(__name__)
@@ -38,12 +38,12 @@ app = Flask(__name__)
 def predict():
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
-
+    
     file = request.files['file']
     user_id = request.form.get('openid')
     if file.filename == '' or user_id == '':
         return jsonify({'error': 'No selected file OR No openid'}), 400
-
+    
     try:
         # 读取并处理图像
         image_bytes = file.read()
@@ -81,7 +81,7 @@ def predict():
             'content': res.json()['output']['output']
         }
         return jsonify(result), 200
-
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -119,7 +119,7 @@ def chat():
 def wx_login():
     data = request.json
     code = data.get('code')
-
+    
     if not code:
         return jsonify({'error': 'Missing code'}), 400
 
@@ -133,8 +133,7 @@ def wx_login():
 
         if 'openid' in data:
             return jsonify({
-                'openid': data['openid'],
-                'session_key': data['session_key']
+                'openid': data['openid']
             })
         else:
             return jsonify({'error': 'WeChat API error', 'detail': data}), 500

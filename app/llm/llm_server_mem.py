@@ -2,10 +2,15 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferWindowMemory,ConversationBufferMemory
+from langchain_community.chat_message_histories import RedisChatMessageHistory
 from langserve import add_routes
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from langchain_core.runnables import RunnableLambda
 import uvicorn
+
+REDIS_PASSWORD="luweike"
+REDIS_URL = f"redis://:{REDIS_PASSWORD}@170.106.150.85:32000"
+DEFUALT_TTL = None
 
 llm = ChatOllama(model='qwen2.5:7b')
 
@@ -32,12 +37,30 @@ def create_chain(memory):
 
 app = FastAPI(title='中药介绍', version='v1.0', description='分析中药的信息')
 
-user_memories = {}
+#user_memories = {}
 
-def create_user_chain(user_id):
-    if user_id not in user_memories:
-        user_memories[user_id] = ConversationBufferMemory(memory_key="history")
-    memory = user_memories[user_id]
+def create_user_chain(user_id, query_input):
+    #if user_id not in user_memories:
+    #    user_memories[user_id] = ConversationBufferMemory(memory_key="history")
+    #memory = user_memories[user_id]
+    #return create_chain(memory)
+    history = RedisChatMessageHistory(
+        url=REDIS_URL,
+        session_id=user_id,
+        ttl=DEFUALT_TTL
+    )
+
+    if "中国药典" in query_input:
+        print("请求图片鉴别，清理缓存")
+        history.clear()
+        print("缓存成功")
+
+    memory = ConversationBufferMemory(
+        memory_key="history",
+        chat_memory=history,
+        return_messages=True
+    )
+
     return create_chain(memory)
 
 async def chat_invoke(input_data: dict):
@@ -50,7 +73,7 @@ async def chat_invoke(input_data: dict):
         raise ValueError("请求中必须包含 input")
 
     # 动态创建绑定该 user_id 的 chain
-    chain = create_user_chain(user_id)
+    chain = create_user_chain(user_id, query_input)
 
     # 通过 chain 推理
     return {"output": chain.predict(input=query_input)}
