@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: wekee/njwjxy-yaoxue-zhongyaojianbie
+  tag: "backendserver_1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5000
+  nodePort: 30080
+
+containerPort: 5000
