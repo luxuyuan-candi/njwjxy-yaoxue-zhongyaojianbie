@@ -1,9 +1,10 @@
 Page({
   data: {
-    userInfo: {},
     hasUserInfo: false,
     avatarUrl: '',
-    nickname: ''
+    nickname: '',
+    identifyCount: 48,
+    quizScore: '24/50'
   },
   onLoad() {
     // 如果全局已经有了，就直接展示

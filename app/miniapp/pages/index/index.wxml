@@ -1,8 +1,36 @@
 <view class="container">
   <button wx:if="{{!hasUserInfo}}" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">选择头像</button>
 
-  <view wx:if="{{hasUserInfo}}">
+  <view wx:if="{{hasUserInfo}}" class="user-info">
     <image src="{{avatarUrl}}" class="avatar"></image>
-    <text class="nickname">{{nickname}}</text>
+    <view class="user-text">
+      <text class="nickname">{{nickname}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{hasUserInfo}}" class="score-section">
+    <view class="score-card">
+      <text class="score-title">识别</text>
+      <text class="score-value">{{identifyCount}}次</text>
+    </view>
+    <view class="score-card">
+      <text class="score-title">成绩</text>
+      <text class="score-value">{{quizScore}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{hasUserInfo}}" class="tool-buttons">
+    <view class="tool-btn" bindtap="onEditProfile" hover-class="tool-btn-active">
+      <image src="../../images/plan.png" class="tool-icon" />
+      <text>课程计划</text>
+    </view>
+    <view class="tool-btn" bindtap="onUploadImage" hover-class="tool-btn-active">
+      <image src="../../images/content.png" class="tool-icon" />
+      <text>课程资料</text>
+    </view>
+    <view class="tool-btn" bindtap="onLogout" hover-class="tool-btn-active">
+      <image src="../../images/active.png" class="tool-icon" />
+      <text class="logout">课程活动</text>
+    </view>
   </view>
 </view>
