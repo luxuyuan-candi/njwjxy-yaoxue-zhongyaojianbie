@@ -30,7 +30,7 @@ with open(convert_path, 'r', encoding='utf-8') as f:
     convert_dict = json.load(f)
 
 APPID = 'wxa4c6a5aa471f6f75'
-APPSECRET = 'xxxxxxxxxxxxxxxxxxxxxxxx'
+APPSECRET = os.getenv('APPSECRET')
 
 # 定义后端服务
 app = Flask(__name__)
