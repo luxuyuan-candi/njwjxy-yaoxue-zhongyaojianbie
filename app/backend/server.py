@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify
 from PIL import Image
 import io
 import requests
+import pymysql
 
 # 加载模型
 work_dir = os.getcwd()
@@ -29,8 +30,83 @@ convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
 with open(convert_path, 'r', encoding='utf-8') as f:
     convert_dict = json.load(f)
 
+# 获取环境变量
 APPID = 'wxa4c6a5aa471f6f75'
 APPSECRET = os.getenv('APPSECRET')
+MYSQLURL = os.getenv('MYSQLURL')
+MYSQLUSER = os.getenv('MYSQLUSER')
+MYSQLPASSWORD = os.getenv('MYSQLPASSWORD')
+MYSQLDATABASE = os.getenv('MYSQLDATABASE')
+MYSQLPORT = os.getenv('MYSQLPORT')
+MYSQLCHARSET = os.getenv('MYSQLCHARSET')
+
+def insert_users_username(user_id):
+    connection = pymysql.connect(
+        host=MYSQLURL,
+        user=MYSQLUSER,
+        password=MYSQLPASSWORD,
+        database=MYSQLDATABASE,
+        port=int(MYSQLPORT),
+        charset=MYSQLCHARSET
+    )
+    try:
+        with connection.cursor() as cursor:
+            username_to_insert = user_id
+            insert_sql = '''
+            INSERT IGNORE INTO users (username)
+            VALUES (%s)
+            '''
+            affected_rows = cursor.execute(insert_sql, (username_to_insert))
+            connection.commit()
+
+            if affected_rows == 1:
+                print(f"用户名 {username_to_insert} 插入成功！")
+            else:
+                print(f"用户名 {username_to_insert} 已存在，忽略插入。")
+    finally:
+        connection.close()
+
+def increment_or_insert_recognition(user_id):
+    connection = pymysql.connect(
+        host=MYSQLURL,
+        user=MYSQLUSER,
+        password=MYSQLPASSWORD,
+        database=MYSQLDATABASE,
+        port=int(MYSQLPORT),
+        charset=MYSQLCHARSET
+    )
+    try:
+        with connection.cursor() as cursor:
+            # 1. 查询是否已经有记录
+            select_sql = """
+            SELECT username FROM recognition WHERE username = %s
+            """
+            cursor.execute(select_sql, (user_id))
+            result = cursor.fetchone()
+
+            if result:
+                username = result[0]
+                # 2. 有记录，更新 recognition_count +1
+                update_sql = """
+                UPDATE recognition
+                SET recognition_count = recognition_count + 1
+                WHERE username = %s
+                """
+                cursor.execute(update_sql, (username,))
+                print(f"用户 {user_id} 的识别记录已存在，已加1。")
+            else:
+                # 3. 没有记录，插入一条新的
+                insert_sql = """
+                INSERT INTO recognition (username, recognition_count)
+                VALUES (%s, 1)
+                """
+                cursor.execute(insert_sql, (user_id))
+                print(f"用户 {user_id} 没有识别记录，已新建。")
+
+            connection.commit()
+
+    finally:
+        connection.close()
 
 # 定义后端服务
 app = Flask(__name__)
@@ -58,7 +134,6 @@ def predict():
         with torch.no_grad():
             outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
-
         question = convert_dict[class_labels[str(predicted.item())]]
         url = "http://10.241.24.121:8001/chat/invoke"
         data = {
@@ -71,8 +146,11 @@ def predict():
             "Content-Type": "application/json"
         }
         res = requests.post(url, json=data, headers=headers)
-
         print(res)
+        
+        # 更新数据库 
+        insert_users_username(user_id)        
+        increment_or_insert_recognition(user_id) 
         # 返回结果
         result = {
             'class_id': predicted.item(),
