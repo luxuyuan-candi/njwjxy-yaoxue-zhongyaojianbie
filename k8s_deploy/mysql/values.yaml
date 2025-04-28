@@ -1,0 +1,21 @@
+architecture: standalone  # 明确指定单节点模式
+
+auth:
+  rootPassword: zhongyao_root  # root 密码
+  username: zhongyao              # 自定义用户
+  password: zhongyao          # 自定义用户密码
+  database: zhongyao          # 默认创建的数据库
+
+primary:
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+
+  persistence:
+    enabled: true
+    size: 2Gi
+    storageClass: ""  # 留空的话会用默认 StorageClass
