@@ -1,6 +1,0 @@
-apiVersion: v2
-name: backend_server
-description: The backend_server Helm chart for Kubernetes
-type: application
-version: 0.1.0
-appVersion: "1.0"
