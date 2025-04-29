@@ -108,6 +108,36 @@ def increment_or_insert_recognition(user_id):
     finally:
         connection.close()
 
+def get_recognition_count(user_id):
+    connection = pymysql.connect(
+        host=MYSQLURL,
+        user=MYSQLUSER,
+        password=MYSQLPASSWORD,
+        database=MYSQLDATABASE,
+        port=int(MYSQLPORT),
+        charset=MYSQLCHARSET
+    )
+    try:
+        with connection.cursor() as cursor:
+            select_sql = """
+            SELECT recognition_count 
+            FROM view_user_recognition 
+            WHERE username = %s
+            """
+            cursor.execute(select_sql, (user_id,))
+            result = cursor.fetchone()
+
+            if result:
+                recognition_count = result[0]
+                if recognition_count is None:
+                    return 0  # 如果是NULL，返回0
+                else:
+                    return recognition_count
+            else:
+                return 0  # 如果查不到记录，也返回0
+    finally:
+        connection.close()
+
 # 定义后端服务
 app = Flask(__name__)
 @app.route('/predict', methods=['POST'])
@@ -215,6 +245,23 @@ def wx_login():
             })
         else:
             return jsonify({'error': 'WeChat API error', 'detail': data}), 500
+    except Exception as e:
+        return jsonify({'error':'Server error', 'message':str(e)}), 500
+
+@app.route('/recognition', methods=['POST'])
+def recognition():
+    data = request.json
+    user_id = data.get('openid')
+
+    if not user_id:
+        return jsonify({'error': 'Missing openid'}), 400
+    try:
+        # 后去评估次数
+        recognition_count = get_recognition_count(user_id)
+        
+        return jsonify({
+            'recognition_count': recognition_count
+        })
     except Exception as e:
         return jsonify({'error':'Server error', 'message':str(e)}), 500
 
