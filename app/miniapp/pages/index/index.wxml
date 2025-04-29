@@ -11,7 +11,7 @@
   <view wx:if="{{hasUserInfo}}" class="score-section">
     <view class="score-card">
       <text class="score-title">识别</text>
-      <text class="score-value">{{identifyCount}}次</text>
+      <text class="score-value">{{recognitionCount}}次</text>
     </view>
     <view class="score-card">
       <text class="score-title">成绩</text>

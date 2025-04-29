@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from langchain_core.runnables import RunnableLambda
 import uvicorn
 
-REDIS_PASSWORD="xxxxxx"
+REDIS_PASSWORD="luweike"
 REDIS_URL = f"redis://:{REDIS_PASSWORD}@170.106.150.85:32000"
 DEFUALT_TTL = None
 
