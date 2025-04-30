@@ -1,7 +1,6 @@
 Page({
   data: {
-    hasUserInfo: false,
-    avatarUrl: '',
+    avatarUrl: '../../images/header.png',
     nickname: '',
     recognitionCount: 0,
     quizScore: '24/50'
@@ -45,14 +44,12 @@ Page({
 
   onChooseAvatar(e) {
     this.setData({
-      avatarUrl: e.detail.avatarUrl,
-      hasUserInfo: true
+      avatarUrl: e.detail.avatarUrl
     });
   },
   onInputNickname(e) {
     this.setData({
-      nickname: e.detail.value,
-      hasUserInfo: true
+      nickname: e.detail.value
     });
   }
 })
