@@ -1,0 +1,7 @@
+<!--pages/index/chat.wxml-->
+<view class="container">
+  <image src="/images/background-upload-chat.jpg" mode="aspectFill" class="background-image"></image>
+  <view class="description">
+    👋 你好，我是慢病随访小助手👦，我可以提供建议。
+  </view>
+</view>

@@ -25,7 +25,7 @@
 .result {
   margin-top: 20rpx;
   font-size: 32rpx;
-  color: #f5f5f5;
+  color: black;
 }
 .description {
   padding: 20rpx;
@@ -88,5 +88,9 @@
 }
 
 .llm-answer {
-  color: yellow;
+  color: blue;
+}
+.input-answer {
+  color: black;
+  font-weight: bold;
 }

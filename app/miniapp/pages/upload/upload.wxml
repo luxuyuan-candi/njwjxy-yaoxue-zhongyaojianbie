@@ -1,6 +1,6 @@
 <!--pages/upload/upload.wxml-->
 <view class="container">
-  <image src="/images/background-upload.jpg" mode="aspectFill" class="background-image"></image>
+  <image src="/images/background-upload-zhongyao.jpg" mode="aspectFill" class="background-image"></image>
   <view class="description">
     👋 你好，我是钟小药👦，我可以识别中药图片，请点击➕按钮开始识别。
   </view>
@@ -11,7 +11,7 @@
     <image src="{{imagePath}}" mode="aspectFit" class="image"></image>
     <view class="result">
       <text style="font-weight: bold; display: block;">{{className}}</text>
-      <view style="height: 2px; background-color: white; width: 100%;"></view>
+      <view style="height: 2px; background-color: red; width: 100%;"></view>
       <view wx:if="{{isQuireMode}}">
         <text decode="{{true}}">{{resultText}}</text>
         <text>\n\n\n\n\n</text>
@@ -20,9 +20,9 @@
     <view wx:if="{{!isQuireMode}}" class="question-answer">
       <text decode="{{true}}"
       class="llm-answer">{{requestContent}}</text>
-      <view style="height: 2px; background-color: white; width: 100%;"></view>
-      <input value="{{answer}}" placeholder="输入答案" bindinput="handleInput" class="input-answer"/>
-      <view style="height: 2px; background-color: white; width: 100%;"></view>
+      <view style="height: 2px; background-color: red; width: 100%;"></view>
+      <input value="{{answer}}" placeholder="输入答案" bindinput="handleInput" class="input-answer" placeholder-style="color:yellow;"/>
+      <view style="height: 2px; background-color: red; width: 100%;"></view>
       <text decode="{{true}}" class="llm-answer">{{answerContent}}</text>
       <button wx:if="{{!isSubmit}}" bindtap="submitAnswer">提交</button>
       <button wx:else bindtap="resetAnswer">再问</button>

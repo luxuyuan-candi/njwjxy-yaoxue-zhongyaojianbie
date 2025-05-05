@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/upload/upload",
+    "pages/chat/chat",
     "pages/index/index"
   ],
   "window": {
-    "navigationBarTitleText": "钟小药",
+    "navigationBarTitleText": "慢病随访小程序",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#f8f8f8"
   },
@@ -15,6 +16,12 @@
         "text": "识别",
         "iconPath": "images/upload.png",
         "selectedIconPath": "images/upload-selected.png"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "随访",
+        "iconPath": "images/chat.png",
+        "selectedIconPath": "images/chat-selected.png"
       },
       {
         "pagePath": "pages/index/index",
