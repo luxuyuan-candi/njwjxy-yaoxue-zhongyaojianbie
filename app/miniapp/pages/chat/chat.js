@@ -1,66 +1,99 @@
 // pages/index/chat.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    inputText: '',
+    messages: [
+      { from: 'bot', text: '您好，我是慢病随访小助手，请问有什么可以帮您？' }
+    ],
+    loading: false,
+    cleared: false
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onInput(e) {
+    this.setData({
+      inputText: e.detail.value
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  onSend() {
+    const text = this.data.inputText.trim();
+    if (!text) return;
+  
+    const newMessages = [...this.data.messages, { from: 'user', text }];
+    this.setData({ messages: newMessages, inputText: '', loading: true });
+    const jsonData = {
+      input: {
+        input: text,
+        openid: getApp().globalData.openid
+      }
+    };
+    // 调用后端
+    wx.request({
+      url: 'https://www.njwjxy.cn/rag/query',
+      method: 'POST',
+      data: jsonData,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        const reply = res.data.output || '未返回结果';
+        newMessages.push({ from: 'bot', text: reply });
+        this.setData({
+          messages: newMessages
+        });
+      },
+      fail: () => {
+        newMessages.push({ from: 'bot', text: '网络错误，请稍后再试。' });
+        this.setData({
+          messages: newMessages
+        });
+      },
+      complete: () => {
+        this.setData({ loading: false });
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  onClear() {
+    wx.showModal({
+      title: '提示',
+      content: '确定要清除所有对话吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            cleared: true
+          });
+          const jsonData = {
+            input: {
+              input: "清理缓存",
+              openid: getApp().globalData.openid
+            }
+          };
+          wx.request({
+            url: 'https://www.njwjxy.cn/rag/query',
+            method: 'POST',
+            data: jsonData,
+            header: {
+              'content-type': 'application/json'
+            },
+            success: (res) => {
+              this.setData({
+                messages: [
+                  { from: 'bot', text: '您好，我是慢病随访小助手，请问有什么可以帮您？' }
+                ]
+              });
+            },
+            fail: () => {
+              newMessages.push({ from: 'bot', text: '网络错误，请稍后再试。' });
+              this.setData({
+                messages: newMessages
+              });
+            },
+            complete: () => {
+              this.setData({ cleared: false });
+            }
+          });
+        }
+      }
+    });
   }
-})
+});

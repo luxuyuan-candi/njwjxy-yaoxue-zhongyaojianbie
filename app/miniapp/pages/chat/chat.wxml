@@ -1,7 +1,30 @@
 <!--pages/index/chat.wxml-->
 <view class="container">
   <image src="/images/background-upload-chat.jpg" mode="aspectFill" class="background-image"></image>
-  <view class="description">
-    👋 你好，我是慢病随访小助手👦，我可以提供建议。
+  <!-- 等待回复提示 -->
+  <view wx:if="{{loading}}" class="toast loading-toast">
+    🤖 正在思考，请稍候...
+  </view>
+  <!-- 清理提示 -->
+  <view wx:if="{{cleared}}" class="toast clear-toast">
+    🗑 正在清理，请稍候...
+  </view>
+  <!-- 对话区域 -->
+  <scroll-view class="chat-log" scroll-y="true">
+    <block wx:for="{{messages}}" wx:key="index">
+      <view class="chat-item {{item.from}}">
+        <view class="bubble">
+          <text decode="{{true}}">{{item.text}}</text>
+        </view>
+      </view>
+    </block>
+    <!-- 占位空白，防止被输入框遮住 -->
+    <view style="height: 80px;"></view>
+  </scroll-view>
+  <!-- 输入栏 -->
+  <view class="chat-input">
+    <input class="input-box" placeholder="请输入内容…" bindinput="onInput" value="{{inputText}}" />
+    <button class="send-btn" bindtap="onSend">发送</button>
+    <button class="clear-btn" bindtap="onClear">🗑</button>
   </view>
 </view>
