@@ -1,0 +1,40 @@
+mode: standalone
+
+replicas: 1
+
+rootUser: minioadmin
+rootPassword: minioadmin123
+
+persistence:
+  enabled: true
+  size: 5Gi
+  storageClass: ""  # 使用默认 StorageClass，或填写你的，比如 "standard"
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+service:
+  type: NodePort
+  nodePort: 31000  # 外部通过此端口访问 MinIO 控制台（可改为你想要的端口）
+
+consoleService:
+  type: NodePort
+  nodePort: 31001  # 控制台服务端口
+
+securityContext:
+  runAsUser: 1001
+  runAsGroup: 1001
+  fsGroup: 1001
+
+    #extraInitContainers:
+    #  - name: fix-permission
+    #    image: busybox
+    #    command: ['sh', '-c', 'chown -R 1001:1001 /export']
+    #    volumeMounts:
+    #      - name: export
+    #        mountPath: /export
