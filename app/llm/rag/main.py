@@ -18,7 +18,8 @@ async def chat_invoke(input_data: dict):
 
     # 动态创建绑定该 user_id 的 chain
     chain = create_user_chain(user_id, query_input)
-
+    if query_input == "清理缓存":
+        return {"output": chain.invoke({"question": "你好"})["answer"]}
     # 通过 chain 推理
     return {"output": chain.invoke({"question": query_input})["answer"]}
 

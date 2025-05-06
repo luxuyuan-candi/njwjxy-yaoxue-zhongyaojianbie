@@ -50,7 +50,7 @@ def create_user_chain(user_id, query_input):
         ttl=DEFAULT_TTL
     )
 
-    if "清理缓存" in query_input:
+    if query_input == "清理缓存":
         print("随访并清理缓存")
         history.clear()
         print("缓存成功")
