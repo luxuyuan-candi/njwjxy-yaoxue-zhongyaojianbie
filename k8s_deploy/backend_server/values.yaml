@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: wekee/njwjxy-yaoxue-zhongyaojianbie
+  tag: "backendserver_5.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5000
+  nodePort: 30080
+
+containerPort: 5000
+
+secret:
+  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+extraEnvVars:
+  - name: MYSQLURL
+    value: "my-mysql.default.svc.cluster.local"
+  - name: MYSQLUSER
+    value: "root"
+  - name: MYSQLPASSWORD
+    value: "zhongyao_root"
+  - name: MYSQLDATABASE
+    value: "zhongyao"
+  - name: MYSQLPORT
+    value: "3306"
+  - name: MYSQLCHARSET
+    value: "utf8mb4"
+  - name: APPSECRET
+    valueFrom:
+      secretKeyRef:
+        name: appsecret
+        key: APPSECRET
