@@ -265,5 +265,51 @@ def recognition():
     except Exception as e:
         return jsonify({'error':'Server error', 'message':str(e)}), 500
 
+@app.route('/rag/query', methods=['POST'])
+def rag_query():
+    data = request.get_json()
+    print("收到的数据:", data)
+
+    data = data.get('input')
+    input_content = data.get('input')
+    user_id = 'rag-' + data.get('openid')
+    if user_id == '':
+        return jsonify({'error': ' No openid'}), 400
+    try:
+        url = "http://10.241.24.121:8002/rag/query/invoke"
+        data = {
+            "input": {
+                "input": input_content,
+                "user_id": user_id
+            }
+        }
+        headers = {
+            "Content-Type": "application/json"
+        }
+        res =  requests.post(url, json=data, headers=headers)
+        print(res.json())
+        result = {
+            'output': res.json()['output']['output']
+        }
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/rag/sync', methods=['GET'])
+def rag_sync():
+    try:
+        url = "http://10.241.24.121:8002/rag/sync"
+        headers = {
+            "Content-Type": "application/json"
+        }
+        res =  requests.get(url, headers=headers)
+        print(res.json())
+        result = {
+            'output': res.json()['status']
+        }
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
