@@ -8,7 +8,7 @@ App({
       success: res => {
         if (res.code) {
           wx.request({
-            url: 'https://www.njwjxy.cn/wx-login',
+            url: 'https://www.njwjxy.cn:30443/wx-login',
             method: 'POST',
             data: { code: res.code },
             success: result => {

@@ -8,7 +8,7 @@ Page({
 
   fetchData() {
     wx.request({
-      url: 'https://www.njwjxy.cn/recognition',
+      url: 'https://www.njwjxy.cn:30443/recognition',
       method: 'POST',
       data: { openid: this.data.nickname },
       success: result => {

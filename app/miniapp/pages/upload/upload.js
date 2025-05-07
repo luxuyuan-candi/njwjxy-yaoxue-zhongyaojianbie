@@ -41,7 +41,7 @@ Page({
       answerContent: ''
     })
     wx.request({
-      url: 'https://www.njwjxy.cn/chat',
+      url: 'https://www.njwjxy.cn:30443/chat',
       method: 'POST',
       data: jsonData,
       header: {
@@ -67,7 +67,7 @@ Page({
       isQuireMode: true
     })
     wx.uploadFile({
-      url: 'https://www.njwjxy.cn/predict', // 替换为你的后端接口地址
+      url: 'https://www.njwjxy.cn:30443/predict', // 替换为你的后端接口地址
       filePath: filePath,
       name: 'file',
       formData: {
@@ -106,7 +106,7 @@ Page({
       isSubmit: true
     });
     wx.request({
-      url: 'https://www.njwjxy.cn/chat',
+      url: 'https://www.njwjxy.cn:30443/chat',
       method: 'POST',
       data: jsonData,
       header: {

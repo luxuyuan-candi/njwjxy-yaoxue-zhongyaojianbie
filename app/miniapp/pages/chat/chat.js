@@ -29,7 +29,7 @@ Page({
     };
     // 调用后端
     wx.request({
-      url: 'https://www.njwjxy.cn/rag/query',
+      url: 'https://www.njwjxy.cn:30443/rag/query',
       method: 'POST',
       data: jsonData,
       header: {
@@ -69,7 +69,7 @@ Page({
             }
           };
           wx.request({
-            url: 'https://www.njwjxy.cn/rag/query',
+            url: 'https://www.njwjxy.cn:30443/rag/query',
             method: 'POST',
             data: jsonData,
             header: {
