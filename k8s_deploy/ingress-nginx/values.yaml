@@ -1,0 +1,23 @@
+controller:
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30480
+      https: 30443
+
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+
+  ingressClass: nginx
+
+  metrics:
+    enabled: true
+
+  admissionWebhooks:
+    enabled: true
+
+defaultBackend:
+  enabled: true
+
