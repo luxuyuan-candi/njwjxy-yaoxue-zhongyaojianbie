@@ -8,7 +8,35 @@ Page({
     loading: false,
     cleared: false
   },
-
+  onLoad() {
+    console.log("已经登录")
+    this.setData({
+      cleared: true
+    });
+    const jsonData = {
+      input: {
+        input: "清理缓存",
+        openid: getApp().globalData.openid
+      }
+    };
+    wx.request({
+      url: 'https://www.njwjxy.cn:30443/rag/query',
+      method: 'POST',
+      data: jsonData,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        console.log("清理成功")
+      },
+      fail: () => {
+        console.log("清理失败")
+      },
+      complete: () => {
+        this.setData({ cleared: false });
+      }
+    });
+  },
   onInput(e) {
     this.setData({
       inputText: e.detail.value
