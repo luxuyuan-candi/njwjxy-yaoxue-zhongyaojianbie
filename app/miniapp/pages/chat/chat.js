@@ -95,5 +95,16 @@ Page({
         }
       }
     });
+  },
+  copyText(e) {
+    const content = e.currentTarget.dataset.content;
+    wx.setClipboardData({
+      data: content,
+      success(res) {
+        wx.showToast({
+          title: '复制成功'
+        });
+      }
+    });
   }
 });

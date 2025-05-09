@@ -83,14 +83,14 @@
 }
 
 .clear-btn {
-  background-color: #ff4d4f;
+  margin: 6px;
+  background-color: red;
   color: white;
-  font-size: 14px;
-  padding: 0 10px;
-  height: 32px;
-  border-radius: 16px;
+  padding: 0 16px;
   border: none;
-  margin-right: 6px;
+  border-radius: 16px;
+  font-size: 14px;
+  height: 32px;
 }
 
 .toast {

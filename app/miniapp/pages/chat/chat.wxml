@@ -13,7 +13,7 @@
   <scroll-view class="chat-log" scroll-y="true">
     <block wx:for="{{messages}}" wx:key="index">
       <view class="chat-item {{item.from}}">
-        <view class="bubble">
+        <view class="bubble" bind:longpress="copyText" data-content="{{item.text}}">
           <text decode="{{true}}">{{item.text}}</text>
         </view>
       </view>
@@ -23,8 +23,8 @@
   </scroll-view>
   <!-- 输入栏 -->
   <view class="chat-input">
-    <input class="input-box" placeholder="请输入内容…" bindinput="onInput" value="{{inputText}}" />
+    <button class="clear-btn" bindtap="onClear">清理</button>
+    <input maxlength="500" class="input-box" placeholder="请输入内容…" bindinput="onInput" value="{{inputText}}" />
     <button class="send-btn" bindtap="onSend">发送</button>
-    <button class="clear-btn" bindtap="onClear">🗑</button>
   </view>
 </view>
