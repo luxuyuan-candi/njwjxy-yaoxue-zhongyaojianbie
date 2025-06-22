@@ -184,7 +184,7 @@ def predict():
         # 返回结果
         result = {
             'class_id': predicted.item(),
-            'class_name': convert_dict[class_labels[str(predicted.item())]],
+            'class_name': class_labels[str(predicted.item())],
             'confidence': torch.nn.functional.softmax(outputs, dim=1)[0][predicted.item()].item(),
             'content': res.json()['output']['output']
         }
