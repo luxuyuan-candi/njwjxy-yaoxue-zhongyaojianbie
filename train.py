@@ -1,7 +1,7 @@
 from source.load_dataset import Local_dataset
 import os
 from torch.utils.data import DataLoader
-from torchvision.models import resnet34
+from torchvision.models import resnet18
 import torch.nn as nn
 import torch
 from torch.utils.tensorboard import SummaryWriter
@@ -9,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 batch_size = 128
 learn_rate = 0.001
 num_epochs = 100
-log_dir = "runs/exp1"
+log_dir = "runs/exp2"
 
 
 def main():
@@ -23,8 +23,8 @@ def main():
     train_dataset_batch = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     # load model
-    model = resnet34(pretrained=True)
-    model.fc = nn.Linear(model.fc.in_features, 163)
+    model = resnet18(pretrained=True)
+    model.fc = nn.Linear(model.fc.in_features, 379)
 
     # set loss\optimizer\device
     criterion = nn.CrossEntropyLoss()
@@ -47,7 +47,7 @@ def main():
             optimizer.step()
             total_loss += loss.item()
         if (epoch+1) % 10 == 0:
-            torch.save(model, os.getcwd()+f'/model/model_full_epoch_{epoch+1}.pth')
+            torch.save(model, os.getcwd()+f'/model/model_full_epoch_379_{epoch+1}.pth')
         writer.add_scalar("Loss/train", total_loss, epoch+1)
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss:.4f}')
     

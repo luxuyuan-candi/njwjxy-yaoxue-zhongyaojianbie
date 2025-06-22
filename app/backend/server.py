@@ -10,7 +10,7 @@ import pymysql
 
 # 加载模型
 work_dir = os.getcwd()
-model_path = work_dir + '/model/model_full_epoch_100.pth'
+model_path = work_dir + '/model/model_full_epoch_379_100.pth'
 model = torch.load(model_path, weights_only=False, map_location=torch.device('cpu'))
 model.eval()
 
@@ -26,9 +26,9 @@ class_path = work_dir + '/model/class.json'
 with open(class_path, 'r', encoding='utf-8') as f:
     class_labels = json.load(f)
 
-convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
-with open(convert_path, 'r', encoding='utf-8') as f:
-    convert_dict = json.load(f)
+#convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
+#with open(convert_path, 'r', encoding='utf-8') as f:
+#    convert_dict = json.load(f)
 
 # 获取环境变量
 APPID = 'wxa4c6a5aa471f6f75'
@@ -164,7 +164,7 @@ def predict():
         with torch.no_grad():
             outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
-        question = convert_dict[class_labels[str(predicted.item())]]
+        question = class_labels[str(predicted.item())]
         url = "http://10.241.24.121:8001/chat/invoke"
         data = {
             "input": {

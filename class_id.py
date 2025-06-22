@@ -9,8 +9,8 @@ def main():
     transformer = {}
     for k,v  in  val_dataset.class_to_idx.items():
         transformer[v] = k
-    with open('model/class.json', 'w') as f:
-        json.dump(transformer, f)
+    with open('model/class.json', 'w', encoding='utf-8') as f:
+        json.dump(transformer, f, ensure_ascii=False)
     
 
 if __name__ == '__main__':
