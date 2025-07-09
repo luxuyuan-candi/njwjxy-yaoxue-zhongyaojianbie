@@ -1,8 +1,7 @@
 from pathlib import Path
 from pprint import pprint
-
+import os
 import pandas as pd
-
 import graphrag.api as api
 from graphrag.config.load_config import load_config
 from graphrag.index.typing.pipeline_run_result import PipelineRunResult
@@ -21,7 +20,7 @@ async def rag_ML(query: str) -> str:
     :param query: 用户提出的具体问题
     :return: 最终获得的答案
     """
-    PROJECT_DIRECTORY = "/root/mcp-graphrag/graphrag"
+    PROJECT_DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphrag")
     graphrag_config = load_config(Path(PROJECT_DIRECTORY))
 
     # 加载实体
