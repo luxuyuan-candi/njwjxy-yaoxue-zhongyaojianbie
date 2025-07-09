@@ -5,7 +5,7 @@
     "pages/index/index"
   ],
   "window": {
-    "navigationBarTitleText": "慢病随访小程序",
+    "navigationBarTitleText": "荐药养生",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#f8f8f8"
   },
