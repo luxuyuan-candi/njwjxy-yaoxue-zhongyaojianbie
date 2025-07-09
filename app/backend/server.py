@@ -160,11 +160,11 @@ client = MultiServerMCPClient({
 })
 
 agent = None
-checkpointer = MemorySaver()
+#checkpointer = MemorySaver()
 async def init_agent():
     global agent
     tools = await client.get_tools()
-    agent = create_react_agent(llm, tools, checkpointer=checkpointer)
+    agent = create_react_agent(llm, tools)
 
 asyncio.run(init_agent())
 

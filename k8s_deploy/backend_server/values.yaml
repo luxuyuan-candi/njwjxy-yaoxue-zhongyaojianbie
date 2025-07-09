@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "backendserver_5.0"
+  tag: "backendserver_8.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -13,11 +13,11 @@ service:
 containerPort: 5000
 
 secret:
-  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  APPSECRET: xxxxxxx
 
 extraEnvVars:
   - name: DEEPSEEK_API_KEY
-    value: "xxxxxxxx"
+    value: "xxxxx"
   - name: MEDICINE_URL
     value: "http://mcp-server-graphrag.default.svc.cluster.local:8000/mcp"
   - name: MYSQLURL
