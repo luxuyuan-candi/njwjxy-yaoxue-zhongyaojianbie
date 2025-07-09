@@ -7,6 +7,12 @@ from PIL import Image
 import io
 import requests
 import pymysql
+from langchain_mcp_adapters.client import MultiServerMCPClient
+from langgraph.prebuilt import create_react_agent
+from langchain_openai import ChatOpenAI
+import asyncio
+from langchain_core.messages import HumanMessage, AIMessage
+from langgraph.checkpoint.memory import MemorySaver
 
 # 加载模型
 work_dir = os.getcwd()
@@ -26,9 +32,6 @@ class_path = work_dir + '/model/class.json'
 with open(class_path, 'r', encoding='utf-8') as f:
     class_labels = json.load(f)
 
-#convert_path = work_dir + '/model/pinyin_to_chinese_herbs.json'
-#with open(convert_path, 'r', encoding='utf-8') as f:
-#    convert_dict = json.load(f)
 
 # 获取环境变量
 APPID = 'wxa4c6a5aa471f6f75'
@@ -39,6 +42,8 @@ MYSQLPASSWORD = os.getenv('MYSQLPASSWORD')
 MYSQLDATABASE = os.getenv('MYSQLDATABASE')
 MYSQLPORT = os.getenv('MYSQLPORT')
 MYSQLCHARSET = os.getenv('MYSQLCHARSET')
+DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
+MEDICINE_URL = os.getenv('MEDICINE_URL')
 
 def insert_users_username(user_id):
     connection = pymysql.connect(
@@ -137,6 +142,31 @@ def get_recognition_count(user_id):
                 return 0  # 如果查不到记录，也返回0
     finally:
         connection.close()
+
+# 定义agent
+llm = ChatOpenAI(
+    model = 'deepseek-chat',
+    temperature=0.8,
+    base_url = 'https://api.deepseek.com',
+    api_key = DEEPSEEK_API_KEY,
+)
+
+
+client = MultiServerMCPClient({
+    "medicine": {
+        "url": MEDICINE_URL,
+        "transport": "streamable_http"
+    }
+})
+
+agent = None
+checkpointer = MemorySaver()
+async def init_agent():
+    global agent
+    tools = await client.get_tools()
+    agent = create_react_agent(llm, tools, checkpointer=checkpointer)
+
+asyncio.run(init_agent())
 
 # 定义后端服务
 app = Flask(__name__)
@@ -276,40 +306,37 @@ def rag_query():
     if user_id == '':
         return jsonify({'error': ' No openid'}), 400
     try:
-        url = "http://10.241.24.121:8002/rag/query/invoke"
-        data = {
-            "input": {
-                "input": input_content,
-                "user_id": user_id
-            }
-        }
-        headers = {
-            "Content-Type": "application/json"
-        }
-        res =  requests.post(url, json=data, headers=headers)
-        print(res.json())
+        async def run():
+            resp = await agent.ainvoke(
+                {"messages": [HumanMessage(content=input_content)]},
+                config={"configurable":{"thread_id": user_id}}
+            )
+            # resp 是 BaseMessage 类型，使用 .content 获取文本
+            #return resp.content if hasattr(resp, "content") else str(resp)
+            return resp["messages"][-1].content
+        reply = asyncio.run(run())
         result = {
-            'output': res.json()['output']['output']
+            'output': reply
         }
         return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/rag/sync', methods=['GET'])
-def rag_sync():
-    try:
-        url = "http://10.241.24.121:8002/rag/sync"
-        headers = {
-            "Content-Type": "application/json"
-        }
-        res =  requests.get(url, headers=headers)
-        print(res.json())
-        result = {
-            'output': res.json()['status']
-        }
-        return jsonify(result), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+#@app.route('/rag/sync', methods=['GET'])
+#def rag_sync():
+#    try:
+#        url = "http://10.241.24.121:8002/rag/sync"
+#        headers = {
+#            "Content-Type": "application/json"
+#        }
+#        res =  requests.get(url, headers=headers)
+#        print(res.json())
+#        result = {
+#            'output': res.json()['status']
+#        }
+#        return jsonify(result), 200
+#    except Exception as e:
+#        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -16,6 +16,10 @@ secret:
   APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 extraEnvVars:
+  - name: DEEPSEEK_API_KEY
+    value: "xxxxxxxx"
+  - name: MEDICINE_URL
+    value: "http://mcp-server-graphrag.default.svc.cluster.local:8000/mcp"
   - name: MYSQLURL
     value: "my-mysql.default.svc.cluster.local"
   - name: MYSQLUSER
