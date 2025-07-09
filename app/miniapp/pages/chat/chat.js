@@ -60,6 +60,7 @@ Page({
       url: 'https://www.njwjxy.cn:30443/rag/query',
       method: 'POST',
       data: jsonData,
+      timeout: 300000,
       header: {
         'content-type': 'application/json'
       },
