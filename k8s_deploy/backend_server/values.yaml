@@ -16,6 +16,8 @@ secret:
   APPSECRET: xxxxxxx
 
 extraEnvVars:
+  - name: LLM_SERVER_URL
+    value: "llm-server.default.svc.cluster.local:8001"
   - name: DEEPSEEK_API_KEY
     value: "xxxxx"
   - name: MEDICINE_URL

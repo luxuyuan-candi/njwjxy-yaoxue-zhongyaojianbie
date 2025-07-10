@@ -44,6 +44,7 @@ MYSQLPORT = os.getenv('MYSQLPORT')
 MYSQLCHARSET = os.getenv('MYSQLCHARSET')
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 MEDICINE_URL = os.getenv('MEDICINE_URL')
+LLM_SERVER_URL = os.getenv('LLM_SERVER_URL')
 
 def insert_users_username(user_id):
     connection = pymysql.connect(
@@ -195,7 +196,7 @@ def predict():
             outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
         question = class_labels[str(predicted.item())]
-        url = "http://10.241.24.121:8001/chat/invoke"
+        url = f"http://{LLM_SERVER_URL}/chat/invoke"
         data = {
             "input": {
                 "input": "结合中国药典，给出#"+question+"#鉴别特性、所属科名、入药部位、全部功效。以普通文本格式输出。",
@@ -234,7 +235,7 @@ def chat():
     if user_id == '':
         return jsonify({'error': ' No openid'}), 400
     try:
-        url = "http://10.241.24.121:8001/chat/invoke"
+        url = f"http://{LLM_SERVER_URL}/chat/invoke"
         data = {
             "input": {
                 "input": input_content,

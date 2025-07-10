@@ -16,8 +16,8 @@ secret:
 
 extraEnvVars:
   - name: REDIS_PASSWORD
-    value: "xxxxxxx"
+    value: "xxxxxx"
   - name: REDIS_URL
     value: "my-redis-master.default.svc.cluster.local:6379"
   - name: DEEPSEEK_API_KEY
-    value: "xxxxx"
+    value: "xxxxxxx"
