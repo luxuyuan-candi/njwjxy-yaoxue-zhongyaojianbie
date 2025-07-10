@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: wekee/njwjxy-yaoxue-zhongyaojianbie
+  tag: "llm-server_1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8001
+
+containerPort: 8001
+
+secret:
+  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+extraEnvVars:
+  - name: REDIS_PASSWORD
+    value: "xxxxxxx"
+  - name: REDIS_URL
+    value: "my-redis-master.default.svc.cluster.local:6379"
+  - name: DEEPSEEK_API_KEY
+    value: "xxxxx"
