@@ -1,4 +1,3 @@
-from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferWindowMemory,ConversationBufferMemory
@@ -7,16 +6,24 @@ from langserve import add_routes
 from fastapi import FastAPI
 from langchain_core.runnables import RunnableLambda
 import uvicorn
+import os
+from langchain_openai import ChatOpenAI
 
-REDIS_PASSWORD="luweike"
-REDIS_URL = f"redis://:{REDIS_PASSWORD}@170.106.150.85:32000"
+REDIS_PASSWORD=os.getenv("REDIS_PASSWORD")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+redis_url = os.getenv("REDIS_URL") 
+
+REDIS_URL = f"redis://:{REDIS_PASSWORD}@{redis_url}"
 DEFUALT_TTL = None
 
-llm = ChatOllama(model='qwen2.5:7b')
+llm = ChatOpenAI(
+    model = 'deepseek-chat',
+    temperature=0.8,
+    base_url = 'https://api.deepseek.com',
+    api_key = DEEPSEEK_API_KEY
+)
 
 def create_chain(memory):
-    llm = ChatOllama(model='qwen2.5:7b')
-
     prompt = PromptTemplate(
         input_variables=["history", "input"],
         template=(
