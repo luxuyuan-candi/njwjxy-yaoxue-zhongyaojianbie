@@ -135,5 +135,93 @@ Page({
         });
       }
     });
-  }
+  },
+  onLongPress(e) {
+    const text = e.currentTarget.dataset.content;
+    const that = this;
+    wx.showActionSheet({
+      itemList: ['复制文字', '转为语音'],
+      success(res) {
+        if (res.tapIndex === 0) {
+          // 复制到剪贴板
+          wx.setClipboardData({
+            data: text,
+            success() {
+              wx.showToast({ title: '已复制', icon: 'success' });
+            }
+          });
+        } else if (res.tapIndex === 1) {
+          // 语音播放功能（简单使用 TTS）
+          that.playTextAudio(text);
+        }
+      },
+      fail(res) {
+        console.log(res.errMsg);
+      }
+    });
+  },
+  
+  // 简易文字转语音播放（需后台支持）
+  playTextAudio(text) {
+    if (text.length > 500) {
+      wx.showToast({
+        title: '文本过长，最多支持500字符',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+    wx.showLoading({
+      title: '正在生成语音...',
+      mask: true
+    });
+    wx.request({
+      url: 'https://www.njwjxy.cn:30443/api/qwen-tts', // 替换成你自己的 TTS API
+      method: 'POST',
+      data: { text },
+      success(res) {
+        wx.hideLoading(); // 隐藏加载提示
+  
+        const audioUrl = res.data.audioUrl;
+        const innerAudioContext = wx.createInnerAudioContext();
+  
+        innerAudioContext.src = audioUrl;
+  
+        // 播放开始时提示
+        innerAudioContext.onPlay(() => {
+          wx.showToast({
+            title: '语音播放中',
+            icon: 'none',
+            duration: 1500
+          });
+        });
+  
+        // 播放结束时提示
+        innerAudioContext.onEnded(() => {
+          wx.showToast({
+            title: '播放完成',
+            icon: 'none',
+            duration: 1000
+          });
+        });
+  
+        // 播放错误处理
+        innerAudioContext.onError((res) => {
+          wx.showToast({
+            title: '播放出错',
+            icon: 'none',
+            duration: 1500
+          });
+        });
+        innerAudioContext.play();
+      },
+      fail() {
+        wx.hideLoading();
+        wx.showToast({
+          title: '语音播放失败',
+          icon: 'none'
+        });
+      }
+    });
+  }  
 });

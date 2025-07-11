@@ -13,7 +13,7 @@
   <scroll-view class="chat-log" scroll-y="true">
     <block wx:for="{{messages}}" wx:key="index">
       <view class="chat-item {{item.from}}">
-        <view class="bubble" bind:longpress="copyText" data-content="{{item.text}}">
+        <view class="bubble" bind:longpress="onLongPress" data-content="{{item.text}}">
           <text decode="{{true}}">{{item.text}}</text>
         </view>
       </view>

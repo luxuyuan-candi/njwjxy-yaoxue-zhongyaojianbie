@@ -16,6 +16,13 @@ spec:
                 port:
                   number: 5000
             path: /
+          - path: /api/qwen-tts
+            pathType: Prefix
+            backend:
+              service:
+                name: tts-server
+                port:
+                  number: 3000  # 请根据实际服务端口修改
     # This section is only required if TLS is to be enabled for the Ingress
   tls:
     - hosts:
