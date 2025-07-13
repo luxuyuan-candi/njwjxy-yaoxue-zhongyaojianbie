@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="category-row">
+    <block wx:for="{{categories}}" wx:key="categoryName" wx:for-item="categoryName">
+      <view class="category-card">
+        <view class="category-title">{{categoryName}}</view>
+        <block wx:for="{{imagesDict[categoryName]}}" wx:key="url" wx:for-item="imgItem">
+          <image src="{{imgItem.url}}" mode="widthFix" class="detail-image" />
+          <view class="img-name">{{imgItem.name}}</view>
+          <view class="description">{{imgItem.desc}}</view>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>
+
