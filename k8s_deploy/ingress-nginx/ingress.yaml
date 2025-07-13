@@ -23,6 +23,13 @@ spec:
                 name: tts-server
                 port:
                   number: 3000  # 请根据实际服务端口修改
+          - path: /medicine-images
+            pathType: Prefix
+            backend:
+              service:
+                name: my-minio
+                port:
+                  number: 9000  # 请根据实际服务端口修改
     # This section is only required if TLS is to be enabled for the Ingress
   tls:
     - hosts:
