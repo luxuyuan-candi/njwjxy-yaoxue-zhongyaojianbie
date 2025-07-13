@@ -2,7 +2,8 @@
   "pages": [
     "pages/upload/upload",
     "pages/chat/chat",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/detail/detail"
   ],
   "window": {
     "navigationBarTitleText": "荐药养生",

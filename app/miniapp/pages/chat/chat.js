@@ -140,7 +140,7 @@ Page({
     const text = e.currentTarget.dataset.content;
     const that = this;
     wx.showActionSheet({
-      itemList: ['复制文字', '转为语音'],
+      itemList: ['复制文字', '转为语音', '用药详情'],
       success(res) {
         if (res.tapIndex === 0) {
           // 复制到剪贴板
@@ -153,6 +153,10 @@ Page({
         } else if (res.tapIndex === 1) {
           // 语音播放功能（简单使用 TTS）
           that.playTextAudio(text);
+        } else if (res.tapIndex === 2) {
+          wx.navigateTo({
+            url: `/pages/detail/detail?content=${encodeURIComponent(text)}`
+          });
         }
       },
       fail(res) {
