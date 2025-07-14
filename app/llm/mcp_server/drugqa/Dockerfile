@@ -7,6 +7,6 @@ git clone https://github.com/luxuyuan-candi/njwjxy-yaoxue-zhongyaojianbie.git
 
 WORKDIR /app/njwjxy-yaoxue-zhongyaojianbie
 
-RUN python3 -m pip install --no-cache-dir -r app/llm/mcp_server/DrugQA/requirements.txt
+RUN python3 -m pip install --no-cache-dir -r app/llm/mcp_server/drugqa/requirements.txt
 
-CMD ["python3", "app/llm/mcp_server/DrugQA/server.py"]
+CMD ["python3", "app/llm/mcp_server/drugqa/server.py"]
