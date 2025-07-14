@@ -16,4 +16,4 @@ secret:
 
 extraEnvVars:
   - name: DEEPSEEK_API_KEY
-    value: "sk-276f291ce72043038ed6b0ca615fb6ce"
+    value: "xxxxxx"
