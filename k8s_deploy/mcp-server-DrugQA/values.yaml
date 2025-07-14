@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: wekee/njwjxy-yaoxue-zhongyaojianbie
+  tag: "mcp-server-graphrag_1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+containerPort: 8000
+
+secret:
+  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+extraEnvVars:
+  - name: GRAPHRAG_API_KEY
+    value: "xxxxxx"
+  - name: GRAPHRAG_ZHIPU_API_KEY
+    value: "xxxxx"
