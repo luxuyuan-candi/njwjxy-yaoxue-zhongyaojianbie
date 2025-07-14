@@ -7,8 +7,7 @@ from langchain.chains import ConversationalRetrievalChain
 import os
 
 # 设置 API Key
-DEEPSEEK_API_KEY = "sk-5c96f4b3f885469eb9af52bab183d654"
-#DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
+DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 
 # 1. 加载 TSV 文件（制表符分隔）
 loader = CSVLoader(
