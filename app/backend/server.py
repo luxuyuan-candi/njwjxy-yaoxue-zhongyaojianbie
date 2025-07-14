@@ -44,6 +44,7 @@ MYSQLPORT = os.getenv('MYSQLPORT')
 MYSQLCHARSET = os.getenv('MYSQLCHARSET')
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 MEDICINE_URL = os.getenv('MEDICINE_URL')
+DRUGQA_URL = os.getenv('DRUGQA_URL')
 LLM_SERVER_URL = os.getenv('LLM_SERVER_URL')
 
 def insert_users_username(user_id):
@@ -157,7 +158,11 @@ client = MultiServerMCPClient({
     "medicine": {
         "url": MEDICINE_URL,
         "transport": "streamable_http"
-    }
+    },
+    "drugqa": {
+        "url": DRUGQA_URL,
+        "transport": "streamable_http"
+    },
 })
 
 agent = None
