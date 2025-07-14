@@ -9,9 +9,13 @@ import os
 # 设置 API Key
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 
+# 获取当前目录
+dir_name = os.path.dirname(os.path.abspath(__file__))
+svc_file = os.join(dir_name, 'yaodianyaoping-test1-utf-8.csv')
+
 # 1. 加载 TSV 文件（制表符分隔）
 loader = CSVLoader(
-    file_path="yaodianyaoping-test1-utf-8.csv",
+    file_path=svc_file,
     csv_args={
         "delimiter": "\t",
         "quotechar": '"'  # 如果没有引号包围
