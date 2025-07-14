@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "mcp-server-DrugQA_2.0"
+  tag: "mcp-server-drugqa_3.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -16,4 +16,4 @@ secret:
 
 extraEnvVars:
   - name: DEEPSEEK_API_KEY
-    value: "xxxxxx"
+    value: "sk-276f291ce72043038ed6b0ca615fb6ce"
