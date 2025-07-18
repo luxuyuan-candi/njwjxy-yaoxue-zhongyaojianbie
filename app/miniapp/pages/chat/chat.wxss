@@ -55,11 +55,12 @@
   left: 0;
   right: 0;
   display: flex;
-  align-items: center;
-  padding: 8px;
-  background-color: #ffffff;
-  border-top: 1px solid #ddd;
-  z-index: 100;
+  justify-content: center;
+  gap: 32rpx;
+  padding: 20rpx 0;
+  background: #ffffff;
+  border-top: 1px solid #eee;
+  z-index: 1000;
 }
 
 .input-box {
@@ -82,15 +83,25 @@
   height: 32px;
 }
 
+/* 清理按钮 */
 .clear-btn {
-  margin: 6px;
-  background-color: red;
-  color: white;
-  padding: 0 16px;
+  background-color: #ff4d4f;
+  color: #fff;
+  padding: 20rpx 40rpx;
   border: none;
-  border-radius: 16px;
-  font-size: 14px;
-  height: 32px;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(255, 77, 79, 0.3);
+}
+
+.form-btn {
+  background-color: #4caf50; /* 绿色 */
+  color: #ffffff;
+  padding: 20rpx 40rpx;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(76, 175, 80, 0.3);
 }
 
 .toast {
@@ -110,4 +121,97 @@
 @keyframes fade {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* 弹出框容器 */
+.form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.form-container {
+  background: #fff;
+  width: 85%;
+  padding: 40rpx 32rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 30rpx rgba(0, 0, 0, 0.1);
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 表单项 */
+.form-item {
+  margin-bottom: 36rpx;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+  white-space: normal;   /* ✅ 允许换行 */
+  word-break: break-word; /* ✅ 长字段断行 */
+  line-height: 1.5;
+}
+
+/* 输入框统一样式 */
+.form-input {
+  width: 100%;
+  padding: 20rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 12rpx;
+  background-color: #f9f9f9;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+/* 性别单选按钮横向排列 */
+radio-group {
+  display: flex;
+  gap: 40rpx;
+  margin-top: 8rpx;
+}
+
+/* 按钮组 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 32rpx;
+  margin-top: 20rpx;
+}
+
+/* 按钮样式 */
+.form-actions button {
+  flex: 1;
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+.form-actions button:first-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.form-actions button:last-child {
+  background-color: #4caf50;
+  color: #fff;
+  box-shadow: 0 4rpx 10rpx rgba(76, 175, 80, 0.3);
+}
+
+.form-scroll {
+  max-height: 80vh; /* 限制高度为视口的 80%，触发滚动 */
+  width: 85%;
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 30rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }

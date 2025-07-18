@@ -3,10 +3,21 @@ Page({
   data: {
     inputText: '',
     messages: [
-      { from: 'bot', text: '您好，我是慢病随访小助手，请问有什么可以帮您？' }
+      { from: 'bot', text: '您好，我是荐药养生小助手，仅提供参考，不能代替医生诊疗，请问有什么可以帮您？' }
     ],
     loading: false,
-    cleared: false
+    cleared: false,
+    showForm: false,
+    formData: {
+      name: '',
+      gender: '',
+      age: '',
+      history: '',
+      symptoms: '',
+      duration: '',
+      medication: '',
+      allergy: ''
+    }
   },
   onLoad() {
     console.log("已经登录")
@@ -227,5 +238,58 @@ Page({
         });
       }
     });
-  }  
+  },
+  onOpenForm() {
+    this.setData({ showForm: true });
+  },
+  onFormCancel() {
+    this.setData({ showForm: false });
+  },
+  onFormInput(e) {
+    const field = e.currentTarget.dataset.field;
+    const value = e.detail.value;
+    this.setData({
+      [`formData.${field}`]: value
+    });
+  },
+  onFormSubmit() {
+    const data = this.data.formData;
+
+    // 简单验证：至少填写姓名和症状
+    if (!data.name || !data.symptoms) {
+      wx.showToast({
+        title: '请填写姓名和症状',
+        icon: 'none'
+      });
+      return;
+    }
+
+    // 格式化消息内容
+    const messageText = 
+      `👤 姓名：${data.name}\n` +
+      `性别：${data.gender || '未填写'}\n` +
+      `年龄：${data.age || '未填写'}\n` +
+      `📝 既往史：${data.history || '无'}\n` +
+      `⚠️ 症状：${data.symptoms}\n` +
+      `⏱ 症状持续时间：${data.duration || '未填写'}\n` +
+      `💊 药品/保健品：${data.medication || '无'}\n` +
+      `🌿 过敏史：${data.allergy || '无'}`;
+
+    this.setData({ showForm: false }, () => {
+      this.setData({
+        formData: {
+          name: '',
+          gender: '',
+          age: '',
+          history: '',
+          symptoms: '',
+          duration: '',
+          medication: '',
+          allergy: ''
+        },
+        inputText: messageText
+      });
+      this.onSend();
+    });
+  },
 });

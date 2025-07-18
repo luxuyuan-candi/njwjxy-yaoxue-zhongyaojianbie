@@ -24,7 +24,60 @@
   <!-- 输入栏 -->
   <view class="chat-input">
     <button class="clear-btn" bindtap="onClear">清理</button>
-    <input maxlength="500" class="input-box" placeholder="请输入内容…" bindinput="onInput" value="{{inputText}}" />
-    <button class="send-btn" bindtap="onSend">发送</button>
+    <button class="form-btn" bindtap="onOpenForm">问诊</button>
+  </view>
+  <!-- 表单弹窗 -->
+  <view class="form-modal" wx:if="{{showForm}}">
+    <scroll-view scroll-y="true" class="form-scroll">
+      <view class="form-container">
+        <view class="form-item">
+          <text>姓名：</text>
+          <input placeholder="请输入姓名" bindinput="onFormInput" data-field="name" value="{{formData.name}}" />
+        </view>
+
+        <view class="form-item">
+          <text>性别：</text>
+          <radio-group bindchange="onFormInput" data-field="gender">
+            <label><radio value="男" checked="{{formData.gender === '男'}}"/> 男</label>
+            <label><radio value="女" checked="{{formData.gender === '女'}}"/> 女</label>
+          </radio-group>
+        </view>
+
+        <view class="form-item">
+          <text>年龄：</text>
+          <input type="number" placeholder="请输入年龄" bindinput="onFormInput" data-field="age" value="{{formData.age}}" />
+        </view>
+
+        <view class="form-item">
+          <text>既往史：</text>
+          <input placeholder="请输入既往病史（如无可填无）" bindinput="onFormInput" data-field="history" value="{{formData.history}}" />
+        </view>
+
+        <view class="form-item">
+          <text>症状：</text>
+          <input placeholder="请输入目前症状" bindinput="onFormInput" data-field="symptoms" value="{{formData.symptoms}}" />
+        </view>
+
+        <view class="form-item">
+          <text>症状持续时间：</text>
+          <input placeholder="请输入症状持续时间" bindinput="onFormInput" data-field="duration" value="{{formData.duration}}" />
+        </view>
+
+        <view class="form-item">
+          <text>正在服用药品/保健品：</text>
+          <input placeholder="请输入药品名称（如无可填无）" bindinput="onFormInput" data-field="medication" value="{{formData.medication}}" />
+        </view>
+
+        <view class="form-item">
+          <text>过敏史：</text>
+          <input placeholder="请输入过敏情况（如无可填无）" bindinput="onFormInput" data-field="allergy" value="{{formData.allergy}}" />
+        </view>
+
+        <view class="form-actions">
+          <button bindtap="onFormCancel">取消</button>
+          <button bindtap="onFormSubmit">提交</button>
+        </view>
+      </view>
+    </scroll-view>
   </view>
 </view>
