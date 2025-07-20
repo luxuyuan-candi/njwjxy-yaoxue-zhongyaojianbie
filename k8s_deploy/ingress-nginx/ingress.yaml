@@ -30,6 +30,34 @@ spec:
                 name: my-minio
                 port:
                   number: 9000  # 请根据实际服务端口修改
+          - path: /api/add_recycle
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/get_recycles
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/get_recycle
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/update_state
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
     # This section is only required if TLS is to be enabled for the Ingress
   tls:
     - hosts:
