@@ -58,7 +58,7 @@ def get_recycles():
     try:
         conn = get_conn()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id, unit AS name, contact, location AS address, state AS status FROM recycle_records ORDER BY created_at DESC")
+        cursor.execute("SELECT id, unit AS name, contact, date, location AS address, state AS status FROM recycle_records ORDER BY created_at DESC")
         records = cursor.fetchall()
         cursor.close()
         conn.close()
