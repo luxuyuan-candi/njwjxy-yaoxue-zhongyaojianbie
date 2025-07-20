@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: wekee/njwjxy-yaoxue-zhongyaojianbie
+  tag: "maoning-yaozha-server_1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5000
+
+containerPort: 5000
+
+secret:
+  APPSECRET: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+extraEnvVars:
+  - name: MYSQLHOST
+    value: "my-mysql.default.svc.cluster.local"
+  - name: MYSQLPASSWD
+    value: "zhongyao_root"
