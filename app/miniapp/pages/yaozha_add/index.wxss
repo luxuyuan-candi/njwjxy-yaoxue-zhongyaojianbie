@@ -1,0 +1,19 @@
+/* pages/yaozha_add/index.wxss */
+.container {
+  padding: 20rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+input, .picker {
+  border: 1px solid #ddd;
+  padding: 10rpx;
+  margin-top: 10rpx;
+  border-radius: 8rpx;
+}
+
+button {
+  margin-top: 20rpx;
+}

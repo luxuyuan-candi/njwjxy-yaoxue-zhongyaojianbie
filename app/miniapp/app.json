@@ -3,7 +3,12 @@
     "pages/upload/upload",
     "pages/chat/chat",
     "pages/index/index",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/maoning/maoning",
+    "pages/yaozha/index",
+    "pages/maosha/index",
+    "pages/yaozha_add/index",
+    "pages/yaozha_recycle_detail/index"
   ],
   "window": {
     "navigationBarTitleText": "荐药养生",
@@ -36,5 +41,10 @@
     "backgroundColor": "#ffffff",
     "borderStyle": "black"
   },
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取您的位置信息用于药渣回收定位"
+    }
+  }
 }

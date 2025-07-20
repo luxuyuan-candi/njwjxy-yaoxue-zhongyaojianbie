@@ -1,0 +1,25 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="../../images/bg-maoning.jpg" mode="aspectFill" />
+
+  <!-- 标题 -->
+  <view class="title">猫宁</view>
+
+  <!-- 滑动说明文字 -->
+  <scroll-view class="description-scroll" scroll-y="true">
+    <view class="description">
+      本平台用于整合药渣回收与猫砂出售信息，方便用户统一管理和查询。您可以在这里快速查看回收情况、发布出售信息、查看市场动态等内容。
+    </view>
+  </scroll-view>
+
+  <!-- 两个半透明按钮 -->
+  <view class="maoning-btns">
+    <button class="btn" bindtap="goToYaoZha">药渣回收</button>
+    <button class="btn" bindtap="goToMaoSha">猫砂出售</button>
+  </view>
+
+  <!-- 底部维护单位 -->
+  <view class="footer">
+    本平台由内江市卫生健康学院维护提供服务。
+  </view>
+</view>

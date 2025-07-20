@@ -1,0 +1,14 @@
+<!--pages/yaozha_recycle_detail/index.wxml-->
+<view class="container">
+  <view class="info-item"><text>单位名称：{{form.unit}}</text></view>
+  <view class="info-item"><text>联系人：{{form.contact}}</text></view>
+  <view class="info-item"><text>地址：{{form.location}}</text></view>
+  <view class="info-item"><text>预约时间：{{form.date}}</text></view>
+  <view class="info-item"><text>药材重量：{{form.weight}}kg</text></view>
+  <view class="info-item"><text>药材种类：{{form.herbs}}</text></view>
+  <view class="info-item"><text>状态：{{form.status}}</text></view>
+
+  <button wx:if="{{form.status === '待处理'}}" type="primary" bindtap="markAsFinished">
+    标记为已回收
+  </button>
+</view>

@@ -51,5 +51,10 @@ Page({
     this.setData({
       nickname: e.detail.value
     });
+  },
+  goToMaoNing() {
+    wx.navigateTo({
+      url: '/pages/maoning/maoning'
+    })
   }
 })

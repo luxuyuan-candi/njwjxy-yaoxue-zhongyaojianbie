@@ -1,0 +1,73 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding: 30rpx;
+  box-sizing: border-box;
+  overflow: hidden; /* ✅ 避免因溢出出现滚动 */
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center; /* 让标题居中 */
+  align-items: center;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.list {
+  flex-grow: 1;
+  margin-top: 20rpx;
+  overflow-y: scroll;
+}
+
+.item {
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 10rpx;
+  background-color: #fafafa;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.item text {
+  display: block;         /* 每个 <text> 独占一行 */
+  word-break: break-word; /* 长词自动断行 */
+  white-space: normal;    /* 允许换行 */
+}
+
+.status-success {
+  background-color: #d4f7d4;
+  color: #2ba245;
+}
+
+.status-pending {
+  background-color: #ffe7ba;
+  color: #d48806;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx; /* 按钮之间的间距 */
+  margin-top: 20rpx;
+}
+
+.stat-btn {
+  flex: 1; /* 平均占位 */
+  height: 80rpx;
+  background-color: #3c9cff;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 16rpx;
+  border: none;
+}

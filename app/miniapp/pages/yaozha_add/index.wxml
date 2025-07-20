@@ -1,0 +1,46 @@
+<!--pages/yaozha_add/index.wxml-->
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="form-item">
+      <text>单位：</text>
+      <input name="unit" placeholder="请输入单位" required/>
+    </view>
+
+    <view class="form-item">
+      <text>联系方式：</text>
+      <input name="contact" placeholder="请输入手机号或微信" required/>
+    </view>
+
+    <view class="form-item">
+      <text>预约回收时间：</text>
+      <picker mode="date" name="date" bindchange="onDateChange">
+        <view class="picker">
+          {{date || '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text>位置：</text>
+      <button type="primary" bindtap="getLocation">获取当前位置</button>
+      <view>{{location}}</view>
+    </view>
+
+    <view class="form-item">
+      <text>药材重量（kg）：</text>
+      <input name="weight" placeholder="请输入重量" type="digit" required/>
+    </view>
+
+    <view class="form-item">
+      <text>药材标注：</text>
+      <checkbox-group name="herbs">
+        <label><checkbox value="海藻"/> 海藻</label>
+        <label><checkbox value="大戟"/> 大戟</label>
+        <label><checkbox value="甘遂"/> 甘遂</label>
+        <label><checkbox value="芫花"/> 芫花</label>
+      </checkbox-group>
+    </view>
+
+    <button formType="submit" type="primary">提交</button>
+  </form>
+</view>

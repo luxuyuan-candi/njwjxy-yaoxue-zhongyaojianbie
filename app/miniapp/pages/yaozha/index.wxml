@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="header">
+    <text class="title">药渣回收</text>
+  </view>
+
+  <!-- 信息列表 -->
+  <scroll-view class="list" scroll-y="true">
+    <block wx:for="{{unitList}}" wx:key="id">
+      <view class="item" bindtap="goToDetail" data-id="{{item.id}}">
+        <text>单位名称：{{item.name}}</text>
+        <text>联系人：{{item.contact}}</text>
+        <text>地址：{{item.address}}</text>
+        <text>日期：{{item.date}}</text>
+        <text>
+          状态：
+          <text class="status {{item.status === '已回收' ? 'status-success' : 'status-pending'}}">
+            {{item.status}}
+          </text>
+        </text>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 底部统计按钮 -->
+  <view class="btn-group">
+    <button class="stat-btn" bindtap="goToStatistics">各单位回收统计</button>
+    <button class="stat-btn" bindtap="onAddClick">添加回收</button>
+  </view>
+</view>
