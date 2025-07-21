@@ -30,6 +30,13 @@ spec:
                 name: my-minio
                 port:
                   number: 9000  # 请根据实际服务端口修改
+          - path: /cat-litter
+            pathType: Prefix
+            backend:
+              service:
+                name: my-minio
+                port:
+                  number: 9000  # 请根据实际服务端口修改
           - path: /api/add_recycle
             pathType: Prefix
             backend:
@@ -70,6 +77,13 @@ spec:
             backend:
               service:
                 name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/maoning_maosha
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-maosha-server
                 port:
                   number: 5000  # 请根据实际服务端口修改
   tls:

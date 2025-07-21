@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "maoning-yaozha-server_5.0"
+  tag: "maoning-maosha-server_1.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -18,4 +18,8 @@ extraEnvVars:
   - name: MYSQLHOST
     value: "my-mysql.default.svc.cluster.local"
   - name: MYSQLPASSWD
-    value: "zhongyao_root"
+    value: "xxxxxxx"
+  - name: MINIOHOST
+    value: "my-minio.default.svc.cluster.local"
+  - name: MINIOPASSWD
+    value: "xxxxxxx"
