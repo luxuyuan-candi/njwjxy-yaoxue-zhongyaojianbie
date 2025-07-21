@@ -133,27 +133,30 @@ def recycle_summary():
 @app.route('/api/recycle_by_unit', methods=['GET'])
 def get_recycle_by_unit():
     unit = request.args.get('unit')
+    location = request.args.get('location')  # 新增 location 参数
+
     conn = get_conn()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
+    # 查询每天的回收记录
     cursor.execute("""
         SELECT
             DATE(date) AS date,
             SUM(weight) AS total_weight
         FROM recycle_records
-        WHERE state = 'finish' AND unit = %s
+        WHERE state = 'finish' AND unit = %s AND location = %s
         GROUP BY DATE(date)
         ORDER BY date ASC
-    """, (unit,))
+    """, (unit, location))
     records = cursor.fetchall()
 
-    # 查询地址与总重量
+    # 查询地址和总回收重量
     cursor.execute("""
         SELECT location, SUM(weight) as total
         FROM recycle_records
-        WHERE state = 'finish' AND unit = %s 
+        WHERE state = 'finish' AND unit = %s AND location = %s
         GROUP BY location
-    """, (unit,))
+    """, (unit, location))
     meta = cursor.fetchone()
 
     cursor.close()
