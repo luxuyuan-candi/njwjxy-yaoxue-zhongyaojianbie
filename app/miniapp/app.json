@@ -8,7 +8,10 @@
     "pages/yaozha/index",
     "pages/maosha/index",
     "pages/yaozha_add/index",
-    "pages/yaozha_recycle_detail/index"
+    "pages/yaozha_recycle_detail/index",
+    "pages/yaozha_summary/index",
+    "pages/yaozha_summary_detail/index",
+    "pages/maosha_add/index"
   ],
   "window": {
     "navigationBarTitleText": "荐药养生",

@@ -15,31 +15,29 @@ Page({
     });
   },
 
-  fetchRecycleList() {
+  fetchRecycleList(callback) {
     wx.request({
-      url: 'https://www.njwjxy.cn:30443/api/get_recycles', // 替换为你的实际地址
+      url: 'https://www.njwjxy.cn:30443/api/get_recycles',
       method: 'GET',
       success: (res) => {
         if (res.data.success) {
           const formattedList = res.data.data.map(item => {
-            // 将 GMT 格式转换成 Date 对象
             const dateObj = new Date(item.date);
-            // 转换为 yyyy-mm-dd 格式
             const year = dateObj.getFullYear();
             const month = String(dateObj.getMonth() + 1).padStart(2, '0');
             const day = String(dateObj.getDate()).padStart(2, '0');
             item.date = `${year}-${month}-${day}`;
-  
             return item;
           });
   
-          this.setData({
-            unitList: formattedList
-          });
+          this.setData({ unitList: formattedList });
         }
       },
       fail: () => {
         wx.showToast({ title: '网络错误', icon: 'none' });
+      },
+      complete: () => {
+        if (callback) callback();  // ✅ 在请求结束后调用回调
       }
     });
   },
@@ -52,11 +50,8 @@ Page({
   },
 
   goToStatistics() {
-    wx.showToast({
-      title: '跳转到统计页',
-      icon: 'success'
-    });
-    // wx.navigateTo({ url: '/pages/statistics/statistics' }); // 如果你已有页面
+
+    wx.navigateTo({ url: '/pages/yaozha_summary/index' }); // 如果你已有页面
   },
 
   onAddClick() {

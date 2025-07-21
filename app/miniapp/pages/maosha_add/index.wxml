@@ -1,0 +1,14 @@
+<!--pages/maosha_add/index.wxml-->
+<view class="form">
+  <button bindtap="chooseImage">选择图片</button>
+  <image wx:if="{{image}}" src="{{image}}" class="preview" mode="aspectFill"/>
+
+  <input placeholder="规格" bindinput="onInput" data-key="spec"/>
+  <input placeholder="价格" bindinput="onInput" data-key="price"/>
+  <text>位置：</text>
+      <button type="primary" bindtap="getLocation">获取当前位置</button>
+      <view>{{location}}</view>
+  <input placeholder="电话" bindinput="onInput" data-key="phone"/>
+
+  <button type="primary" bindtap="submit">上传</button>
+</view>

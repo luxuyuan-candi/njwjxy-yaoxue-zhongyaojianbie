@@ -1,2 +1,19 @@
 <!--pages/maosha/index.wxml-->
-<text>pages/maosha/index.wxml</text>
+<view class="container">
+  <view class="header">
+    <text class="title">猫砂出售</text>
+    <view class="divider"></view>
+  </view>
+
+  <view wx:for="{{products}}" wx:key="index" class="product-card">
+    <image class="product-image" src="{{item.image}}" mode="aspectFill"></image>
+    <view class="product-info">
+      <text>规格：{{item.spec}}</text>
+      <text>总价：{{item.price}}</text>
+      <text>地点：{{item.location}}</text>
+      <text>电话：{{item.phone}}</text>
+    </view>
+  </view>
+
+  <button class="add-btn" bindtap="goToAdd">添加猫砂</button>
+</view>

@@ -22,4 +22,4 @@ extraEnvVars:
   - name: MINIOHOST
     value: "my-minio.default.svc.cluster.local"
   - name: MINIOPASSWD
-    value: "xxxxxxx"
+    value: "xxxxxx"

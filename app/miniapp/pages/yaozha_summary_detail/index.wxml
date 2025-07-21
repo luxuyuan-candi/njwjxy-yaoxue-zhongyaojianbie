@@ -1,0 +1,21 @@
+<!-- pages/yaozha_summary_detail/index.wxml -->
+<view class="container">
+  <text class="title">回收详情</text>
+
+  <view class="chart-container">
+    <ec-canvas id="recycleChart" canvas-id="recycleChart" ec="{{ec}}" />
+  </view>
+
+  <view class="info">
+    <view class="info-item">
+      <text>单位名称：{{unit}}</text>
+    </view>
+    <view class="info-item">
+      <text>地址：{{location}}</text>
+    </view>
+    <view class="info-item">
+      <text>总回收量：{{total}} kg</text>
+    </view>
+</view>
+</view>
+
