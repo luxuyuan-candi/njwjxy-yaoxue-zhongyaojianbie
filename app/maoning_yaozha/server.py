@@ -108,6 +108,66 @@ def update_state():
 
     return jsonify({'success': True})
 
+@app.route('/api/recycle_summary', methods=['GET'])
+def recycle_summary():
+    conn = get_conn()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    # 只统计状态为 finish 的
+    cursor.execute("""
+        SELECT 
+            unit AS name, 
+            location AS address,
+            SUM(weight) AS total_weight
+        FROM recycle_records
+        WHERE state = 'finish'
+        GROUP BY unit, location
+    """)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({'success': True, 'data': rows})
+
+@app.route('/api/recycle_by_unit', methods=['GET'])
+def get_recycle_by_unit():
+    unit = request.args.get('unit')
+    conn = get_conn()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute("""
+        SELECT
+            DATE(date) AS date,
+            SUM(weight) AS total_weight
+        FROM recycle_records
+        WHERE state = 'finish' AND unit = %s
+        GROUP BY DATE(date)
+        ORDER BY date ASC
+    """, (unit,))
+    records = cursor.fetchall()
+
+    # 查询地址与总重量
+    cursor.execute("""
+        SELECT location, SUM(weight) as total
+        FROM recycle_records
+        WHERE state = 'finish' AND unit = %s 
+        GROUP BY location
+    """, (unit,))
+    meta = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        'success': True,
+        'data': {
+            'records': records,
+            'location': meta['location'],
+            'total': meta['total']
+        }
+    })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

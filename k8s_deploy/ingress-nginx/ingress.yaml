@@ -58,7 +58,20 @@ spec:
                 name: maoning-yaozha-server
                 port:
                   number: 5000  # 请根据实际服务端口修改
-    # This section is only required if TLS is to be enabled for the Ingress
+          - path: /api/recycle_summary
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/recycle_by_unit
+            pathType: Prefix
+            backend:
+              service:
+                name: maoning-yaozha-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
   tls:
     - hosts:
       - www.njwjxy.cn
