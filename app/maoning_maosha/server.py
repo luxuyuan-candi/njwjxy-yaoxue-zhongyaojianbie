@@ -26,7 +26,7 @@ def create_minio_client():
 
 BUCKET_NAME = 'cat-litter'
 
-def create_mysql_client()
+def create_mysql_client():
     # 配置 MySQL
     db = pymysql.connect(
         host=MYSQLHOST,
