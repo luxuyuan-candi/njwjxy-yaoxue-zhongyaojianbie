@@ -15,27 +15,35 @@ app = Flask(__name__)
 CORS(app)
 
 # 配置 MinIO
-minio_client = boto3.client(
-    's3',
-    endpoint_url=f'http://{MINIOHOST}:9000',  # 修改为你的 MinIO 地址
-    aws_access_key_id='minioadmin',
-    aws_secret_access_key=MINIOPASSWD
-)
+def create_minio_client():
+    minio_client = boto3.client(
+        's3',
+        endpoint_url=f'http://{MINIOHOST}:9000',  # 修改为你的 MinIO 地址
+        aws_access_key_id='minioadmin',
+        aws_secret_access_key=MINIOPASSWD
+    )
+    return minio_client
+
 BUCKET_NAME = 'cat-litter'
 
-# 配置 MySQL
-db = pymysql.connect(
-    host=MYSQLHOST,
-    user='root',
-    password=MYSQLPASSWD,
-    database='zhongyao',
-    charset='utf8mb4'
-)
+def create_mysql_client()
+    # 配置 MySQL
+    db = pymysql.connect(
+        host=MYSQLHOST,
+        user='root',
+        password=MYSQLPASSWD,
+        database='zhongyao',
+        charset='utf8mb4'
+    )
+    return db
 
 @app.route('/api/maoning_maosha/products', methods=['GET'])
 def get_products():
+    db = create_mysql_client()
     cursor = db.cursor(pymysql.cursors.DictCursor)
     cursor.execute("SELECT * FROM products ORDER BY id DESC")
+    cursor.close()
+    db.close()
     return jsonify(cursor.fetchall())
 
 @app.route('/api/maoning_maosha/upload', methods=['POST'])
@@ -50,16 +58,20 @@ def upload():
     filename = f"{uuid.uuid4()}.{ext}"
 
     # 上传至 MinIO
+    minio_client = create_mysql_client()
     minio_client.upload_fileobj(image, BUCKET_NAME, filename)
     image_url = f"https://www.njwjxy.cn:30443/{BUCKET_NAME}/{filename}"
 
     # 保存到数据库
+    db = create_mysql_client()
     cursor = db.cursor()
     cursor.execute("""
         INSERT INTO products (image, spec, price, location, phone)
         VALUES (%s, %s, %s, %s, %s)
     """, (image_url, spec, price, location, phone))
     db.commit()
+    cursor.close()
+    db.close()
 
     return jsonify({"msg": "success", "url": image_url})
 
