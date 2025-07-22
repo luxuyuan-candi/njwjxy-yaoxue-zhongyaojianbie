@@ -58,7 +58,7 @@ def upload():
     filename = f"{uuid.uuid4()}.{ext}"
 
     # 上传至 MinIO
-    minio_client = create_mysql_client()
+    minio_client = create_minio_client()
     minio_client.upload_fileobj(image, BUCKET_NAME, filename)
     image_url = f"https://www.njwjxy.cn:30443/{BUCKET_NAME}/{filename}"
 
