@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "maoning-maosha-server_3.0"
+  tag: "maoning-maosha-server_4.0"
   pullPolicy: IfNotPresent
 
 service:

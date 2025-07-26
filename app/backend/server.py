@@ -314,7 +314,7 @@ def rag_query():
     try:
         async def run():
             resp = await agent.ainvoke(
-                    {"messages": [SystemMessage(content="你是一个问病荐药+用药指导+养生建议助手。根据提出的用药问题，给出西药、中成药、西药加中药组合、保健品的用药建议。其中如果是涉及感冒的，就回复'西药:复方氨酚烷胺片[感康]、对乙酰氨基酚片、盐酸羟甲唑啉喷雾剂；中成药：感冒清热颗粒、桑菊感冒颗粒、连花清瘟胶囊；中药加西药组合：维C银翘片(薄膜衣)；康复的保健品和事物：维生素C泡腾片、生姜红糖水。'"),HumanMessage(content=input_content)]},
+                    {"messages": [SystemMessage(content="你是一个问病荐药+用药指导+养生建议助手。根据提出的用药问题，给出西药、中成药、西药加中药组合、保健品的用药建议，并给出药品的批准文号、规格、适应症、用法用量和保健品的批准文号、规格、价格等信息。其中如果是涉及感冒的，就回复'西药:复方氨酚烷胺片[感康]、对乙酰氨基酚片、盐酸羟甲唑啉喷雾剂；中成药：感冒清热颗粒、桑菊感冒颗粒、连花清瘟胶囊；中药加西药组合：维C银翘片(薄膜衣)；康复的保健品和事物：维生素C泡腾片、生姜红糖水。'"),HumanMessage(content=input_content)]},
                 config={"configurable":{"thread_id": user_id}}
             )
             # resp 是 BaseMessage 类型，使用 .content 获取文本

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "llm-server_1.0"
+  tag: "llm-server_2.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -16,8 +16,8 @@ secret:
 
 extraEnvVars:
   - name: REDIS_PASSWORD
-    value: "xxxxxx"
+    value: "luweike"
   - name: REDIS_URL
     value: "my-redis-master.default.svc.cluster.local:6379"
   - name: DEEPSEEK_API_KEY
-    value: "xxxxxxx"
+    value: "sk-276f291ce72043038ed6b0ca615fb6ce"
