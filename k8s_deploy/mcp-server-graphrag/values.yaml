@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "mcp-server-graphrag_1.0"
+  tag: "mcp-server-graphrag_3.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -16,6 +16,6 @@ secret:
 
 extraEnvVars:
   - name: GRAPHRAG_API_KEY
-    value: "xxxxxx"
+    value: "sk-276f291ce72043038ed6b0ca615fb6ce"
   - name: GRAPHRAG_ZHIPU_API_KEY
-    value: "xxxxx"
+    value: "741770ad1423455f8239d31096d4f43d.YkaiIEdcYi5vPZWi"

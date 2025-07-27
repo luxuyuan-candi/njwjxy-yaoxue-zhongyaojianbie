@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: wekee/njwjxy-yaoxue-zhongyaojianbie
-  tag: "backendserver_8.0"
+  tag: "backendserver_13.0"
   pullPolicy: IfNotPresent
 
 service:
@@ -13,15 +13,17 @@ service:
 containerPort: 5000
 
 secret:
-  APPSECRET: xxxxxxx
+  APPSECRET: 3e688c934b36d0d82d9975390b76ebdc
 
 extraEnvVars:
   - name: LLM_SERVER_URL
     value: "llm-server.default.svc.cluster.local:8001"
   - name: DEEPSEEK_API_KEY
-    value: "xxxxx"
+    value: "sk-276f291ce72043038ed6b0ca615fb6ce"
   - name: MEDICINE_URL
     value: "http://mcp-server-graphrag.default.svc.cluster.local:8000/mcp"
+  - name: DRUGQA_URL
+    value: "http://mcp-server-drugqa.default.svc.cluster.local:9000/mcp"
   - name: MYSQLURL
     value: "my-mysql.default.svc.cluster.local"
   - name: MYSQLUSER
