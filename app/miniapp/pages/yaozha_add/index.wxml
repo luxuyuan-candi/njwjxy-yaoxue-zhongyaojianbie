@@ -2,8 +2,16 @@
 <view class="container">
   <form bindsubmit="onSubmit">
     <view class="form-item">
-      <text>单位：</text>
-      <input name="unit" placeholder="请输入单位" required/>
+      <text>类型：</text>
+      <radio-group name="type" bindchange="onTypeChange">
+        <label><radio value="company" checked="{{type === 'company'}}"/> 单位</label>
+        <label><radio value="person" checked="{{type === 'person'}}"/> 个人</label>
+      </radio-group>
+    </view>
+
+    <view class="form-item">
+      <text>单位/个人名称：</text>
+      <input name="unit" placeholder="请输入单位/个人名称" required/>
     </view>
 
     <view class="form-item">

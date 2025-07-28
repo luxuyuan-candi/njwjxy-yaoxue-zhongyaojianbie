@@ -1,7 +1,9 @@
 // pages/yaozha/index.js
 Page({
   data: {
-    unitList: []
+    unitList: [],
+    filters: ['全部', '单位', '个人'],
+    activeFilter: '全部'
   },
 
   onLoad() {
@@ -15,9 +17,24 @@ Page({
     });
   },
 
+  onFilterChange(e) {
+    const selected = e.currentTarget.dataset.type;
+    this.setData({ activeFilter: selected }, () => {
+      this.fetchRecycleList();
+    });
+  },
+
   fetchRecycleList(callback) {
+    let url = 'https://www.njwjxy.cn:30443/api/get_recycles';
+    const typeMap = { '单位': 'company', '个人': 'person' };
+    const typeParam = typeMap[this.data.activeFilter];
+  
+    if (typeParam) {
+      url += '?type=' + encodeURIComponent(typeParam);
+    }
+  
     wx.request({
-      url: 'https://www.njwjxy.cn:30443/api/get_recycles',
+      url,
       method: 'GET',
       success: (res) => {
         if (res.data.success) {
@@ -37,7 +54,7 @@ Page({
         wx.showToast({ title: '网络错误', icon: 'none' });
       },
       complete: () => {
-        if (callback) callback();  // ✅ 在请求结束后调用回调
+        if (callback) callback();
       }
     });
   },

@@ -2,12 +2,19 @@
 Page({
   data: {
     date: '',
-    location: ''
+    location: '',
+    type: 'company'  // 默认值
   },
 
   onDateChange(e) {
     this.setData({
       date: e.detail.value
+    });
+  },
+
+  onTypeChange(e) {
+    this.setData({
+      type: e.detail.value
     });
   },
 
@@ -37,6 +44,7 @@ Page({
     const data = e.detail.value;
     const date = this.data.date;
     const location = this.data.location;
+    const type = this.data.type;
   
     if (!data.unit || !data.contact || !date || !location || !data.weight) {
       wx.showToast({
@@ -52,7 +60,8 @@ Page({
       date: date,
       location: location,
       weight: data.weight,
-      herbs: data.herbs || []  // 复选框返回数组
+      herbs: data.herbs || [],  // 复选框返回数组
+      type: type  // 新增字段
     };
   
     wx.request({
