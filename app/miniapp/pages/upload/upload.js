@@ -75,6 +75,7 @@ Page({
       },
       success: (res) => {
         const data = JSON.parse(res.data);
+        console.log(data)
         this.setData({
           className: data.class_name || '未返回结果',
           resultText: data.content || '未返回结果',
