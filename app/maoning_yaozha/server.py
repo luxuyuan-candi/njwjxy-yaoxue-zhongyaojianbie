@@ -95,18 +95,33 @@ def update_state():
     data = request.json
     recycle_id = data.get('id')
     new_state = data.get('state')
+    approved_weight = data.get('approved_weight')  # 新增字段
 
     if new_state not in ['pending', 'finish']:
         return jsonify({'success': False, 'msg': '非法状态值'})
 
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute("UPDATE recycle_records SET state = %s WHERE id = %s", (new_state, recycle_id))
+    
+    if approved_weight is not None:
+        cursor.execute("""
+            UPDATE recycle_records 
+            SET state = %s, approved_weight = %s 
+            WHERE id = %s
+        """, (new_state, approved_weight, recycle_id))
+    else:
+        cursor.execute("""
+            UPDATE recycle_records 
+            SET state = %s 
+            WHERE id = %s
+        """, (new_state, recycle_id))
+
     conn.commit()
     cursor.close()
     conn.close()
 
     return jsonify({'success': True})
+
 
 @app.route('/api/recycle_summary', methods=['GET'])
 def recycle_summary():
