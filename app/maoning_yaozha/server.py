@@ -133,7 +133,7 @@ def recycle_summary():
         SELECT 
             unit AS name, 
             location AS address,
-            SUM(weight) AS total_weight
+            SUM(COALESCE(approved_weight, weight)) AS total_weight
         FROM recycle_records
         WHERE state = 'finish'
         GROUP BY unit, location
@@ -157,7 +157,7 @@ def get_recycle_by_unit():
     cursor.execute("""
         SELECT
             DATE(date) AS date,
-            SUM(weight) AS total_weight
+            SUM(COALESCE(approved_weight, weight)) AS total_weight
         FROM recycle_records
         WHERE state = 'finish' AND unit = %s AND location = %s
         GROUP BY DATE(date)
@@ -167,7 +167,7 @@ def get_recycle_by_unit():
 
     # 查询地址和总回收重量
     cursor.execute("""
-        SELECT location, SUM(weight) as total
+        SELECT location, SUM(COALESCE(approved_weight, weight)) as total
         FROM recycle_records
         WHERE state = 'finish' AND unit = %s AND location = %s
         GROUP BY location
