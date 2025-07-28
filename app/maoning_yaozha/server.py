@@ -30,6 +30,7 @@ def add_recycle():
     location = data.get('location')
     weight = data.get('weight')
     herbs = data.get('herbs')  # 是列表
+    type_ = data.get('type', 'company')
 
     if not all([unit, contact, date, location, weight]):
         return jsonify({'success': False, 'msg': '缺少必要字段'})
@@ -41,10 +42,10 @@ def add_recycle():
         conn = get_conn()
         cursor = conn.cursor()
         sql = """
-            INSERT INTO recycle_records(unit, contact, date, location, weight, herbs)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO recycle_records(unit, contact, date, location, weight, herbs, type)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(sql, (unit, contact, date, location, weight, herbs_str))
+        cursor.execute(sql, (unit, contact, date, location, weight, herbs_str, type_))
         conn.commit()
         cursor.close()
         conn.close()
@@ -58,7 +59,19 @@ def get_recycles():
     try:
         conn = get_conn()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT id, unit AS name, contact, date, location AS address, state AS status FROM recycle_records ORDER BY created_at DESC")
+        type_filter = request.args.get('type')
+        base_sql = """
+            SELECT id, unit AS name, contact, date, location AS address, state AS status, type
+            FROM recycle_records
+        """
+        if type_filter in ['company', 'person']:
+            base_sql += "WHERE type = %s ORDER BY created_at DESC"
+            cursor.execute(base_sql, (type_filter,))
+        else:
+            base_sql += "ORDER BY created_at DESC"
+            cursor.execute(base_sql)
+
+        #cursor.execute("SELECT id, unit AS name, contact, date, location AS address, state AS status FROM recycle_records ORDER BY created_at DESC")
         records = cursor.fetchall()
         cursor.close()
         conn.close()
