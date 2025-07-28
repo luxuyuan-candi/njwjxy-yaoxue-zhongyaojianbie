@@ -135,28 +135,35 @@ def update_state():
 
     return jsonify({'success': True})
 
-
 @app.route('/api/recycle_summary', methods=['GET'])
 def recycle_summary():
+    type_filter = request.args.get('type')
     conn = get_conn()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-    # 只统计状态为 finish 的
-    cursor.execute("""
+    base_sql = """
         SELECT 
             unit AS name, 
             location AS address,
             SUM(COALESCE(approved_weight, weight)) AS total_weight
         FROM recycle_records
         WHERE state = 'finish'
-        GROUP BY unit, location
-    """)
+    """
+    params = []
+    if type_filter in ['company', 'person']:
+        base_sql += " AND type = %s"
+        params.append(type_filter)
+
+    base_sql += " GROUP BY unit, location"
+
+    cursor.execute(base_sql, params)
     rows = cursor.fetchall()
 
     cursor.close()
     conn.close()
 
     return jsonify({'success': True, 'data': rows})
+
 
 @app.route('/api/recycle_by_unit', methods=['GET'])
 def get_recycle_by_unit():
