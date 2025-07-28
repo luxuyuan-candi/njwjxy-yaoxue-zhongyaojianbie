@@ -5,6 +5,29 @@
   <!-- 标题 -->
   <view class="title">猫宁</view>
 
+  
+  <!-- 轮播图中含视频和图片，优化版 -->
+  <swiper 
+    class="video-swiper" 
+    circular 
+    indicator-dots 
+    interval="{{swiperInterval}}" 
+    duration="500"
+  >
+    <block wx:for="{{videoList}}" wx:key="index">
+      <swiper-item>
+        <video 
+          class="swiper-video" 
+          src="{{item.src}}" 
+          controls 
+          objectFit="cover" 
+          bindplay="onVideoPlay" 
+          bindended="onVideoEnded"
+        ></video>
+      </swiper-item>
+    </block>
+  </swiper>
+
   <!-- 滑动说明文字 -->
   <scroll-view class="description-scroll" scroll-y="true">
     <view class="description">
