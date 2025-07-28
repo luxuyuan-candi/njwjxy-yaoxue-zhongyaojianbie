@@ -145,7 +145,8 @@ def recycle_summary():
         SELECT 
             unit AS name, 
             location AS address,
-            SUM(COALESCE(approved_weight, weight)) AS total_weight
+            SUM(COALESCE(approved_weight, weight)) AS total_weight,
+            type
         FROM recycle_records
         WHERE state = 'finish'
     """
