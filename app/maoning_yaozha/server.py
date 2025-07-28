@@ -155,7 +155,7 @@ def recycle_summary():
         base_sql += " AND type = %s"
         params.append(type_filter)
 
-    base_sql += " GROUP BY unit, location"
+    base_sql += " GROUP BY unit, location, type"
 
     cursor.execute(base_sql, params)
     rows = cursor.fetchall()
