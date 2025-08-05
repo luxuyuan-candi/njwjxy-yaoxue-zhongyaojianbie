@@ -304,8 +304,6 @@ def recognition():
 @app.route('/rag/query', methods=['POST'])
 def rag_query():
     data = request.get_json()
-    print("收到的数据:", data)
-
     data = data.get('input')
     input_content = data.get('input')
     user_id = 'rag-' + data.get('openid')
@@ -318,12 +316,12 @@ def rag_query():
                     {"messages": [HumanMessage(content="你是一个问病荐药+用药指导+养生建议助手。根据提出的问题，结合可用的工具，给出西药、中成药、保健品和综合建议，其中药品输出名称、适应症和注意事项，综合建议输出药物的相互作用、正在服用的药与保健品的相互作用以及非药物疗法建议。如果是涉及感冒的，就回复'西药:复方氨酚烷胺片[感康]、对乙酰氨基酚片、盐酸羟甲唑啉喷雾剂；中成药：感冒清热颗粒、桑菊感冒颗粒、连花清瘟胶囊；保健品：维生素C泡腾片、生姜红糖水。'"+f"病人情况:{input_content}")]},
                     version="v1"
                 ):
+                    yield f"DEBUG raw event: {str(event)}\n"
                     if event["event"] == "on_chat_model_stream":
-                        print("DEBUG event data:", event["data"])
-                        chunk = event["data"]["content"]
+                        chunk = event["data"].get("content", "没有content")
                         yield chunk
             except Exception as e:
-                yield f"[ERROR]: {str(e)}"
+                yield f"\n[ERROR in stream]: {str(e)}\n"
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
