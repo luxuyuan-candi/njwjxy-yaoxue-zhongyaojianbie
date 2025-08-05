@@ -1,0 +1,24 @@
+<!--pages/yaozha_summary/index.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">回收药渣统计</text>
+    <view class="divider"></view>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{activeFilter === 'all' ? 'active' : ''}}" bindtap="changeFilter" data-type="all">全部</view>
+    <view class="filter-item {{activeFilter === 'company' ? 'active' : ''}}" bindtap="changeFilter" data-type="company">单位</view>
+    <view class="filter-item {{activeFilter === 'person' ? 'active' : ''}}" bindtap="changeFilter" data-type="person">个人</view>
+  </view>
+
+  <scroll-view scroll-y class="list">
+    <block wx:for="{{summaryList}}" wx:key="name">
+      <view class="item" bindtap="goToDetail" data-unit="{{item.name}}" data-location="{{item.address}}">
+        <view class="row">单位/个人：{{item.name}}</view>
+        <view class="row">类型：{{item.type}}</view>
+        <view class="row">地址：{{item.address}}</view>
+        <view class="row">总回收重量：{{item.total_weight}} kg</view>
+      </view>
+    </block>
+  </scroll-view>
+</view>

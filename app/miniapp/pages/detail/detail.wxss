@@ -1,0 +1,49 @@
+.container {
+  padding: 20px;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+.category-row {
+  display: flex;
+  flex-direction: column;  /* 竖直排列 */
+  gap: 20px;               /* 每个类别间距 */
+}
+
+.category-card {
+  width: 100%;             /* 宽度撑满一行 */
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.category-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.detail-image {
+  width: 100%;       /* 或固定宽度，比如 180rpx */
+  height: 180rpx;    /* 固定高度 */
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.img-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+
+

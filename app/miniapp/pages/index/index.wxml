@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="user-info">
+    <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image src="{{avatarUrl}}" class="avatar"></image>
+    </button>
+    <view class="user-text">
+      <text class="nickname">{{nickname}}</text>
+    </view>
+  </view>
+
+  <view class="score-section">
+    <view class="score-card">
+      <text class="score-title">识别</text>
+      <text class="score-value">{{recognitionCount}}次</text>
+    </view>
+    <view class="score-card">
+      <text class="score-title">成绩</text>
+      <text class="score-value">{{quizScore}}</text>
+    </view>
+  </view>
+
+  <view class="tool-buttons">
+    <view class="tool-btn" bindtap="onEditProfile" hover-class="tool-btn-active">
+      <image src="../../images/plan.png" class="tool-icon" />
+      <text>课程计划</text>
+    </view>
+    <view class="tool-btn" bindtap="onUploadImage" hover-class="tool-btn-active">
+      <image src="../../images/content.png" class="tool-icon" />
+      <text>课程资料</text>
+    </view>
+    <view class="tool-btn" bindtap="onLogout" hover-class="tool-btn-active">
+      <image src="../../images/active.png" class="tool-icon" />
+      <text class="logout">课程活动</text>
+    </view>
+    <view class="tool-btn" bindtap="goToMaoNing" hover-class="tool-btn-active">
+      <image src="../../images/maoning.png" class="tool-icon" />
+      <text>猫宁平台</text>
+    </view>
+  </view>
+</view>

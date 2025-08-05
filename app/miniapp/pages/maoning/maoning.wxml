@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="../../images/bg-maoning.jpg" mode="aspectFill" />
+
+  <!-- 轮播图中含视频和图片，优化版 -->
+  <swiper 
+    class="video-swiper" 
+    circular 
+    indicator-dots 
+    interval="{{swiperInterval}}" 
+    duration="500"
+  >
+    <block wx:for="{{videoList}}" wx:key="index">
+      <swiper-item>
+        <video 
+          class="swiper-video" 
+          src="{{item.src}}" 
+          controls 
+          objectFit="cover" 
+          bindplay="onVideoPlay" 
+          bindended="onVideoEnded"
+        ></video>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 两个半透明按钮 -->
+  <view class="maoning-btns">
+    <button class="btn" bindtap="goToYaoZha">药渣回收</button>
+    <button class="btn" bindtap="goToMaoSha">猫砂出售</button>
+  </view>
+
+  <!-- 底部维护单位 -->
+  <view class="footer">
+    本平台由内江市卫生与健康职业学院维护提供服务。
+  </view>
+</view>

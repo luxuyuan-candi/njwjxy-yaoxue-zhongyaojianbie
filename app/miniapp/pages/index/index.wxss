@@ -1,0 +1,118 @@
+.container {
+  padding: 40rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  display: block;
+}
+
+.avatar-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-right: 30rpx;
+  box-shadow: none;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.openid {
+  font-size: 24rpx;
+  color: #999;
+  word-break: break-all;
+}
+
+.grade-display {
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.tool-buttons {
+  display: flex;
+  flex-wrap: wrap;             /* 允许换行 */
+  justify-content: flex-start;
+  padding: 30rpx 0;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.tool-btn {
+  display: flex;
+  width: 33.33%;               /* 每行3个 */
+  box-sizing: border-box;     /* 确保内边距不影响宽度 */
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+.tool-btn-active {
+  transform: scale(0.95);
+  background-color: #f2f2f2;
+}
+
+.tool-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+}
+
+
+.score-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  gap: 20rpx;
+}
+
+.score-card {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.score-title {
+  font-size: 26rpx;
+  color: #888;
+  margin-bottom: 12rpx;
+}
+
+.score-value {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #333;
+}

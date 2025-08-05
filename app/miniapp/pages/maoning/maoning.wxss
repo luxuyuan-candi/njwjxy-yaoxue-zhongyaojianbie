@@ -1,0 +1,95 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 10rpx 30rpx 30rpx 30rpx; /* ↓缩小 */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  font-size: 44rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10rpx; /* ↓缩小 */
+  color: #333;
+}
+
+/* 滑动文字区域 */
+.description-scroll {
+  max-height: 200rpx;
+  margin: 30rpx 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.description {
+  font-size: 28rpx;
+  color: #ffffff;  /* 白色 */
+  padding: 0 10rpx;
+  line-height: 1.6;
+}
+
+/* 按钮容器 */
+.maoning-btns {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 220rpx;
+}
+
+.btn {
+  width: 260rpx;
+  height: 100rpx;
+  background-color: rgba(60, 156, 255, 0.7); /* 半透明蓝 */
+  color: white;
+  font-size: 30rpx;
+  border-radius: 16rpx;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* 水平居中 */
+  text-align: center;       /* 备用，防止换行 */
+}
+
+/* 底部说明文字 */
+.footer {
+  z-index: 1;
+  text-align: center;
+  font-size: 24rpx;
+  color: #ccc; 
+  margin-top: 150rpx;
+  padding-bottom: 30rpx;
+}
+
+.video-swiper {
+  width: 100%;
+  height: 220px;
+  margin-top: 400rpx; /* ↓缩小 */
+  margin-bottom: 0rpx; 
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.swiper-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+
