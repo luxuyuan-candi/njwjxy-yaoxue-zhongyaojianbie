@@ -2,7 +2,7 @@ import torch
 import os
 from torchvision import transforms
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, stream_with_context, jsonify
 from PIL import Image
 import io
 import requests
@@ -311,21 +311,25 @@ def rag_query():
     user_id = 'rag-' + data.get('openid')
     if user_id == '':
         return jsonify({'error': ' No openid'}), 400
-    try:
-        async def run():
-            resp = await agent.ainvoke(
-                    {"messages": [HumanMessage(content="你是一个问病荐药+用药指导+养生建议助手。根据提出的问题，结合可用的工具，给出西药、中成药、保健品和综合建议，其中药品输出名称、适应症和注意事项，综合建议输出药物的相互作用、正在服用的药与保健品的相互作用以及非药物疗法建议。如果是涉及感冒的，就回复'西药:复方氨酚烷胺片[感康]、对乙酰氨基酚片、盐酸羟甲唑啉喷雾剂；中成药：感冒清热颗粒、桑菊感冒颗粒、连花清瘟胶囊；保健品：维生素C泡腾片、生姜红糖水。'"+f"病人情况:{input_content}")]}
-            )
-            # resp 是 BaseMessage 类型，使用 .content 获取文本
-            #return resp.content if hasattr(resp, "content") else str(resp)
-            return resp["messages"][-1].content
-        reply = asyncio.run(run())
-        result = {
-            'output': reply
-        }
-        return jsonify(result), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    async def generate():
+        try:
+            async for event in agent.astream_events(
+                {"messages": [HumanMessage(content="你是一个问病荐药+用药指导+养生建议助手。根据提出的问题，结合可用的工具，给出西药、中成药、保健品和综合建议，其中药品输出名称、适应症和注意事项，综合建议输出药物的相互作用、正在服用的药与保健品的相互作用以及非药物疗法建议。如果是涉及感冒的，就回复'西药:复方氨酚烷胺片[感康]、对乙酰氨基酚片、盐酸羟甲唑啉喷雾剂；中成药：感冒清热颗粒、桑菊感冒颗粒、连花清瘟胶囊；保健品：维生素C泡腾片、生姜红糖水。'"+f"病人情况:{input_content}")]},
+                version="v1"
+            ):
+                if event["event"] == "on_chat_model_stream":
+                    chunk = event["data"].content
+                    yield chunk
+        except Exception as e:
+            yield f"[ERROR]: {str(e)}"
+
+    async def stream_response():
+        async for chunk in generate():
+            yield chunk
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return Response(stream_with_context(stream_response()), content_type='text/plain; charset=utf-8')
 
 #@app.route('/rag/sync', methods=['GET'])
 #def rag_sync():
@@ -344,4 +348,4 @@ def rag_query():
 #        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, threaded=True)
