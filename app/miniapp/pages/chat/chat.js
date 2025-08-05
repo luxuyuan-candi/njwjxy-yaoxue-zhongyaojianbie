@@ -102,8 +102,22 @@ Page({
     });
   },
   ab2str(buf) {
-    const decoder = new TextDecoder('utf-8');
-    return decoder.decode(new Uint8Array(buf));
+    const u8Arr = new Uint8Array(buf);
+    let result = '';
+    const chunkSize = 8192; // 每次处理 8K，防爆栈
+  
+    for (let i = 0; i < u8Arr.length; i += chunkSize) {
+      const subArray = u8Arr.subarray(i, i + chunkSize);
+      result += String.fromCharCode.apply(null, subArray);
+    }
+  
+    // 解决中文乱码：使用 decodeURIComponent + escape 解码
+    try {
+      return decodeURIComponent(escape(result));
+    } catch (e) {
+      console.error('解码失败', e);
+      return result;
+    }
   },
   displayTypingEffect(text) {
     let index = 0;
