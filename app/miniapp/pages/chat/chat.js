@@ -6,6 +6,7 @@ Page({
       { from: 'bot', text: '您好，我是药邻康小助手，仅提供参考，不能代替医生诊疗，请问有什么可以帮您？' }
     ],
     loading: false,
+    currentMessage: '',
     cleared: false,
     showForm: false,
     formData: {
@@ -75,12 +76,19 @@ Page({
       header: {
         'content-type': 'application/json'
       },
+      responseType: 'arraybuffer', // 接收字节流
+      /*
       success: (res) => {
         const reply = res.data.output || '未返回结果';
         newMessages.push({ from: 'bot', text: reply });
         this.setData({
           messages: newMessages
         });
+      },
+      */
+      success: (res) => {
+        const result = this.ab2str(res.data);
+        this.displayTypingEffect(result);
       },
       fail: () => {
         newMessages.push({ from: 'bot', text: '网络错误，请稍后再试。' });
@@ -92,6 +100,30 @@ Page({
         this.setData({ loading: false });
       }
     });
+  },
+  ab2str(buf) {
+    const decoder = new TextDecoder('utf-8');
+    return decoder.decode(new Uint8Array(buf));
+  },
+  displayTypingEffect(text) {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        const newChar = text[index++];
+        const messages = this.data.messages;
+  
+        if (messages[messages.length - 1]?.from === 'bot') {
+          messages[messages.length - 1].text += newChar;
+        } else {
+          messages.push({ from: 'bot', text: newChar });
+        }
+  
+        this.setData({ messages, currentMessage: messages[messages.length - 1].text });
+      } else {
+        clearInterval(interval);
+        this.setData({ loading: false, currentMessage: '' });
+      }
+    }, 50);
   },
   onClear() {
     wx.showModal({
