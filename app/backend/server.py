@@ -319,7 +319,8 @@ def rag_query():
                     version="v1"
                 ):
                     if event["event"] == "on_chat_model_stream":
-                        chunk = event["data"].content
+                        print("DEBUG event data:", event["data"])
+                        chunk = event["data"]["content"]
                         yield chunk
             except Exception as e:
                 yield f"[ERROR]: {str(e)}"
