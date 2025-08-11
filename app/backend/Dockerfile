@@ -3,7 +3,7 @@ WORKDIR /app
 
 RUN apt update && \
 apt install -y git && \
-git clone https://github.com/luxuyuan-candi/njwjxy-yaoxue-zhongyaojianbie.git -b stream_reponse
+git clone https://github.com/luxuyuan-candi/njwjxy-yaoxue-zhongyaojianbie.git
 
 WORKDIR /app/njwjxy-yaoxue-zhongyaojianbie
 
