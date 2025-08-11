@@ -115,17 +115,29 @@ def update_state():
 
     conn = get_conn()
     cursor = conn.cursor()
-    
-    if approved_weight is not None:
+    batch_no = data.get('batch_no') 
+    if approved_weight is not None and batch_no is not None:
         cursor.execute("""
             UPDATE recycle_records 
-            SET state = %s, approved_weight = %s 
+            SET state = %s, approved_weight = %s, batch_no = %s
+            WHERE id = %s
+        """, (new_state, approved_weight, batch_no, recycle_id))
+    elif approved_weight is not None:
+        cursor.execute("""
+            UPDATE recycle_records 
+            SET state = %s, approved_weight = %s
             WHERE id = %s
         """, (new_state, approved_weight, recycle_id))
+    elif batch_no is not None:
+        cursor.execute("""
+            UPDATE recycle_records 
+            SET state = %s, batch_no = %s
+            WHERE id = %s
+        """, (new_state, batch_no, recycle_id))
     else:
         cursor.execute("""
             UPDATE recycle_records 
-            SET state = %s 
+            SET state = %s
             WHERE id = %s
         """, (new_state, recycle_id))
 
