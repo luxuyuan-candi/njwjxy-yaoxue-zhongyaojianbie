@@ -3,7 +3,8 @@ Page({
   data: {
     form: {},
     showModal: false,
-    inputWeight: ''
+    inputWeight: '',
+    inputBatchNo: ''
   },
 
   onLoad(options) {
@@ -46,25 +47,35 @@ Page({
     this.setData({ inputWeight: e.detail.value });
   },
 
+  onInputBatchNo(e) {
+    this.setData({ inputBatchNo: e.detail.value });
+  },
+
   onCancel() {
     this.setData({ showModal: false, inputWeight: '' });
   },
 
   onConfirm() {
     const weight = parseFloat(this.data.inputWeight);
+    const batchNo = this.data.inputBatchNo.trim();
+
     if (isNaN(weight) || weight <= 0) {
       wx.showToast({ title: '请输入有效重量', icon: 'none' });
       return;
     }
+    if (!batchNo) {
+      wx.showToast({ title: '请输入批号', icon: 'none' });
+      return;
+    }
 
-    const id = this.data.form.id;
     wx.request({
       url: `https://www.njwjxy.cn:30443/api/update_state`,
       method: 'POST',
       data: {
-        id: id,
+        id: this.data.form.id,
         state: 'finish',
-        approved_weight: weight
+        approved_weight: weight,
+        batch_no: batchNo
       },
       header: { 'content-type': 'application/json' },
       success: (res) => {
@@ -84,6 +95,6 @@ Page({
       }
     });
 
-    this.setData({ showModal: false, inputWeight: '' });
+    this.setData({ showModal: false, inputWeight: '', inputBatchNo: '' });
   }
 });

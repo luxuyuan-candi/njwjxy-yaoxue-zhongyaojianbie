@@ -4,6 +4,7 @@
   <view class="info-item"><text>联系人：{{form.contact}}</text></view>
   <view class="info-item"><text>地址：{{form.location}}</text></view>
   <view class="info-item"><text>预约时间：{{form.date}}</text></view>
+  <view class="info-item"><text>批号：{{form.batch_no || '无'}}</text></view>
   <view class="info-item"><text>药材重量：{{form.weight}}kg</text></view>
   <view class="info-item">
   <text>核准重量：{{form.approved_weight ? form.approved_weight + 'kg' : '未核准'}}</text>
@@ -18,6 +19,8 @@
     <view class="modal-content">
       <text class="modal-title">请输入核准重量 (kg)</text>
       <input type="number" placeholder="如：2.5" bindinput="onInputWeight" value="{{inputWeight}}" class="modal-input"/>
+      <text class="modal-title">请输入批号</text>
+      <input type="text" placeholder="如：20250726PT-1" bindinput="onInputBatchNo" value="{{inputBatchNo}}" class="modal-input"/>
       <view class="modal-buttons">
         <button bindtap="onCancel" class="modal-btn cancel">取消</button>
         <button type="primary" bindtap="onConfirm" class="modal-btn confirm">确定</button>
