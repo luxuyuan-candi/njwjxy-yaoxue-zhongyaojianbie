@@ -64,7 +64,7 @@ def upload():
     db = create_mysql_client()
     cursor = db.cursor()
     cursor.execute("""
-        INSERT INTO products (image, name, phone)
+        INSERT INTO maosha_shiyong (image, name, phone)
         VALUES (%s, %s, %s)
     """, (image_url, name, phone))
     db.commit()
