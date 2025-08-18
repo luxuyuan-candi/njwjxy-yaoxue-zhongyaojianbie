@@ -73,6 +73,50 @@ def upload():
 
     return jsonify({"msg": "success", "url": image_url})
 
+@app.route('/api/maoning_maoshashiyong/product', methods=['GET'])
+def get_product():
+    """获取单个申请详情"""
+    id = request.args.get('id')
+    if not id:
+        return jsonify({"success": False, "msg": "缺少id参数"}), 400
+
+    db = create_mysql_client()
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM maosha_shiyong WHERE id=%s", (id,))
+    row = cursor.fetchone()
+    cursor.close()
+    db.close()
+
+    if row:
+        return jsonify(row)
+    else:
+        return jsonify({"success": False, "msg": "未找到记录"}), 404
+
+
+@app.route('/api/maoning_maoshashiyong/update', methods=['POST'])
+def update_status():
+    """更新申请状态"""
+    data = request.get_json()
+    id = data.get('id')
+    state = data.get('state')
+
+    if not id or not state:
+        return jsonify({"success": False, "msg": "缺少必要参数"}), 400
+
+    db = create_mysql_client()
+    cursor = db.cursor()
+    cursor.execute("UPDATE maosha_shiyong SET status=%s WHERE id=%s", (state, id))
+    db.commit()
+    affected = cursor.rowcount
+    cursor.close()
+    db.close()
+
+    if affected > 0:
+        return jsonify({"success": True, "msg": "更新成功"})
+    else:
+        return jsonify({"success": False, "msg": "更新失败或未找到记录"})
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
 
