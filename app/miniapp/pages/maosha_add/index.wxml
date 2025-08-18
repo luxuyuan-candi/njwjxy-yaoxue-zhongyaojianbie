@@ -1,7 +1,13 @@
 <!--pages/maosha_add/index.wxml-->
 <view class="form">
-  <button bindtap="chooseImage">选择图片</button>
+  <button bindtap="chooseImage" data-key="image">选择产品图片</button>
   <image wx:if="{{image}}" src="{{image}}" class="preview" mode="aspectFill"/>
+
+  <button bindtap="chooseImage" data-key="erweiimage">选择质量溯源二维码图</button>
+  <image wx:if="{{erweiimage}}" src="{{erweiimage}}" class="preview" mode="aspectFill"/>
+
+  <button bindtap="chooseImage" data-key="ywymimage">选择一物一码图</button>
+  <image wx:if="{{ywymimage}}" src="{{ywymimage}}" class="preview" mode="aspectFill"/>
 
   <input placeholder="规格" bindinput="onInput" data-key="spec"/>
   <input placeholder="价格" bindinput="onInput" data-key="price"/>

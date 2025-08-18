@@ -1,0 +1,22 @@
+<!--pages/maosha/index.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">猫砂试用</text>
+    <view class="divider"></view>
+  </view>
+
+<scroll-view class="list" scroll-y="true">
+  <view wx:for="{{products}}" wx:key="index" class="product-card" bindtap="goToDetail" data-id="{{item.id}}">
+    <image class="product-image" src="{{item.image}}" mode="aspectFill"></image>
+    <view class="product-info">
+      <text>申请人：{{item.name}}</text>
+      <text>电话：{{item.phone}}</text>
+      <text class="status-text {{item.status === 'pending' ? 'status-pending' : (item.status === 'approve' ? 'status-approve' : '')}}">
+      状态：{{item.status}}
+      </text>
+    </view>
+  </view>
+</scroll-view>
+
+  <button class="add-btn" bindtap="goToAdd">申请猫砂</button>
+</view>

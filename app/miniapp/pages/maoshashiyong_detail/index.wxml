@@ -1,0 +1,19 @@
+<!--pages/yaozha_recycle_detail/index.wxml-->
+<view class="container">
+  <image class="product-image" src="{{form.image}}" mode="aspectFill"></image>
+  <view class="info-item"><text>申请人：{{form.name}}</text></view>
+  <view class="info-item"><text>电话：{{form.phone}}
+  </text></view>
+
+  <button wx:if="{{form.status === 'pending'}}" type="primary" bindtap="markAsFinished">
+    审核通过
+  </button>
+  <view wx:if="{{showModal}}" class="modal-overlay">
+    <view class="modal-content">
+      <view class="modal-buttons">
+        <button bindtap="onCancel" class="modal-btn cancel">取消</button>
+        <button type="primary" bindtap="onConfirm" class="modal-btn confirm">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

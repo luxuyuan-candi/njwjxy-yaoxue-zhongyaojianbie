@@ -1,0 +1,10 @@
+<!--pages/maosha_add/index.wxml-->
+<view class="form">
+  <button bindtap="chooseImage">审核图片</button>
+  <image wx:if="{{image}}" src="{{image}}" class="preview" mode="aspectFill"/>
+
+  <input placeholder="申请人" bindinput="onInput" data-key="name"/>
+  <input placeholder="电话" bindinput="onInput" data-key="phone"/>
+
+  <button type="primary" bindtap="submit">上传</button>
+</view>

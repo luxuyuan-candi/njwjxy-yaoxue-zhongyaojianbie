@@ -29,18 +29,11 @@
   border-radius: 12rpx;
   background-color: #fff;
 }
-.product-images {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 5px; /* 图片间距 */
-  margin-bottom: 10px;
-}
 .product-image {
-  width: 30%; /* 三张图平分一行 */
-  height: 100rpx; /* 固定高度，可根据需要调整 */
-  border-radius: 5rpx;
-  object-fit: cover; /* 保持比例填充 */
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8rpx;
+  object-fit: cover;
 }
 .product-info text {
   display: block;
@@ -56,6 +49,20 @@
   font-size: 32rpx;
   padding: 20rpx 60rpx;
   border-radius: 50rpx;
+}
+
+.status-pending {
+  color: #000; /* 字体颜色可调 */
+  background-color: yellow;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.status-approve {
+  color: #fff;
+  background-color: green;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
 
 .list {

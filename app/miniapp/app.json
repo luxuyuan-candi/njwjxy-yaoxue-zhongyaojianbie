@@ -11,7 +11,10 @@
     "pages/yaozha_recycle_detail/index",
     "pages/yaozha_summary/index",
     "pages/yaozha_summary_detail/index",
-    "pages/maosha_add/index"
+    "pages/maosha_add/index",
+    "pages/maoshashiyong/index",
+    "pages/maoshashiyong_add/index",
+    "pages/maoshashiyong_detail/index"
   ],
   "window": {
     "navigationBarTitleText": "药邻康",

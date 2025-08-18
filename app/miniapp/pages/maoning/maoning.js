@@ -28,5 +28,10 @@ Page({
     wx.navigateTo({
       url: '/pages/maosha/index'
     })
+  },
+  goToMaoShaShiYong() {
+    wx.navigateTo({
+      url: '/pages/maoshashiyong/index'
+    })
   }
 })

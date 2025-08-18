@@ -28,6 +28,7 @@
   <view class="maoning-btns">
     <button class="btn" bindtap="goToYaoZha">药渣回收</button>
     <button class="btn" bindtap="goToMaoSha">猫砂出售</button>
+    <button class="btn" bindtap="goToMaoShaShiYong">猫砂试用</button>
   </view>
 
   <!-- 底部维护单位 -->
