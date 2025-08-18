@@ -45,7 +45,7 @@ def get_products():
     cursor.close()
     db.close()
     return jsonify(cursor.fetchall())
-
+'''
 @app.route('/api/maoning_maosha/upload', methods=['POST'])
 def upload():
     image = request.files['image']
@@ -69,6 +69,45 @@ def upload():
         INSERT INTO products (image, spec, price, location, phone)
         VALUES (%s, %s, %s, %s, %s)
     """, (image_url, spec, price, location, phone))
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return jsonify({"msg": "success", "url": image_url})
+'''
+@app.route('/api/maoning_maosha/upload', methods=['POST'])
+def upload():
+    # 原始字段
+    image = request.files.get('image')
+    erweiimage = request.files.get('erweiimage')
+    ywymimage = request.files.get('ywymimage')
+
+    spec = request.form.get('spec')
+    price = request.form.get('price')
+    location = request.form.get('location')
+    phone = request.form.get('phone')
+
+    minio_client = create_minio_client()
+
+    def save_to_minio(file_obj):
+        if file_obj:
+            ext = file_obj.filename.split('.')[-1]
+            filename = f"{uuid.uuid4()}.{ext}"
+            minio_client.upload_fileobj(file_obj, BUCKET_NAME, filename)
+            return f"https://www.njwjxy.cn:30443/{BUCKET_NAME}/{filename}"
+        return None
+
+    image_url = save_to_minio(image)
+    erweiimage_url = save_to_minio(erweiimage)
+    ywymimage_url = save_to_minio(ywymimage)
+
+    # 保存到数据库
+    db = create_mysql_client()
+    cursor = db.cursor()
+    cursor.execute("""
+        INSERT INTO products (image, erweiimage, ywymimage, spec, price, location, phone)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (image_url, erweiimage_url, ywymimage_url, spec, price, location, phone))
     db.commit()
     cursor.close()
     db.close()
