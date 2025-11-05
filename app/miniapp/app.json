@@ -16,6 +16,10 @@
     "pages/maoshashiyong_add/index",
     "pages/maoshashiyong_detail/index"
   ],
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
   "window": {
     "navigationBarTitleText": "药邻康",
     "navigationBarTextStyle": "black",
@@ -28,12 +32,6 @@
         "text": "识别",
         "iconPath": "images/upload.png",
         "selectedIconPath": "images/upload-selected.png"
-      },
-      {
-        "pagePath": "pages/chat/chat",
-        "text": "荐药",
-        "iconPath": "images/chat.png",
-        "selectedIconPath": "images/chat-selected.png"
       },
       {
         "pagePath": "pages/index/index",

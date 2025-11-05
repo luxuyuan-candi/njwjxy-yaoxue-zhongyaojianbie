@@ -9,10 +9,10 @@
       </radio-group>
     </view>
 
-    <view class="form-item">
+    <!--view class="form-item">
       <text>单位/个人名称：</text>
       <input name="unit" placeholder="请输入单位/个人名称" required/>
-    </view>
+    </view-->
 
     <view class="form-item">
       <text>联系方式：</text>
