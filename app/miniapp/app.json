@@ -14,7 +14,12 @@
     "pages/maosha_add/index",
     "pages/maoshashiyong/index",
     "pages/maoshashiyong_add/index",
-    "pages/maoshashiyong_detail/index"
+    "pages/maoshashiyong_detail/index",
+    "pages/yangsheng/aidentify/index",
+    "pages/yangsheng/yaoshanbao/index",
+    "pages/yangsheng/yangshenggongfa/index",
+    "pages/yangsheng/yangshengshiping/index",
+    "pages/yangsheng/video/video"
   ],
   "requiredPrivateInfos": [
     "getLocation",

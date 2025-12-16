@@ -1,0 +1,31 @@
+<!--pages/yangsheng/video/video.wxml-->
+<view class="video-page">
+  <!-- 视频播放器 -->
+  <video
+    class="video-player"
+    src="{{video.src}}"
+    controls
+    autoplay="{{false}}"
+    show-mute-btn
+    show-center-play-btn
+    object-fit="contain"
+  />
+
+  <!-- 信息区 -->
+  <view class="info">
+    <view class="title">{{video.title}}</view>
+    <view class="meta">
+      <text>时长 {{video.duration}}</text>
+      <text class="dot">·</text>
+      <text>{{video.level}}</text>
+    </view>
+    <view class="desc">{{video.desc}}</view>
+  </view>
+
+  <!-- 可选：相关推荐 -->
+  <!--
+  <view class="recommend">
+    <view class="section-title">相关推荐</view>
+  </view>
+  -->
+</view>

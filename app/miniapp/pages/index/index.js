@@ -56,5 +56,10 @@ Page({
     wx.navigateTo({
       url: '/pages/maoning/maoning'
     })
+  },
+  goToYangSheng() {
+    wx.navigateTo({
+      url: '/pages/yangsheng/aidentify/index'
+    })
   }
 })

@@ -1,0 +1,39 @@
+/* pages/yangsheng/video/video.wxss */
+.video-page {
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+/* 视频 */
+.video-player {
+  width: 100%;
+  height: 420rpx;
+  background: #000;
+}
+
+/* 信息区 */
+.info {
+  padding: 24rpx;
+  background: #ffffff;
+}
+
+.title {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.meta {
+  font-size: 24rpx;
+  color: #999;
+  margin: 12rpx 0;
+}
+
+.dot {
+  margin: 0 8rpx;
+}
+
+.desc {
+  font-size: 26rpx;
+  color: #555;
+  line-height: 1.6;
+}

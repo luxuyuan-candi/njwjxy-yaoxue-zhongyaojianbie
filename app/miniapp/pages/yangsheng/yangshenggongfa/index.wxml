@@ -1,0 +1,52 @@
+<!--pages/yangsheng/index/index.wxml-->
+<!-- 遮罩层 -->
+<view
+  class="mask"
+  wx:if="{{showSidebar}}"
+  bindtap="closeSidebar"
+/>
+
+<!-- 侧边栏 -->
+<view class="sidebar {{showSidebar ? 'open' : ''}}">
+  <view class="item" bindtap="goIndex" >首页</view>
+  <view class="item" bindtap="goPage" data-page="aidentify">Ai体质识别</view>
+  <view class="item" bindtap="goPage" data-page="yangshengshiping">养生视频</view>
+  <view class="item" bindtap="goPage" data-page="yaoshanbao">药膳包</view>
+  <view class="item" bindtap="goPage" data-page="yangshenggongfa">养生功法</view>
+</view>
+
+<!-- 主内容 -->
+<view class="page">
+  <view class="nav-bar">
+    <!-- 左侧菜单 -->
+    <view class="menu-btn" bindtap="openSidebar">
+      ☰
+    </view>
+
+    <!-- 中间标题 -->
+    <view class="nav-title">
+      养生功法
+    </view>
+  </view>
+  <view class="content">
+    <view class="video-list">
+      <view
+        class="video-card"
+        wx:for="{{videoList}}"
+        wx:key="id"
+        bindtap="goVideo"
+        data-id="{{item.id}}"
+      >
+        <image
+          class="cover"
+          src="{{item.cover}}"
+          mode="aspectFill"
+        />
+        <view class="info">
+          <view class="title">{{item.title}}</view>
+          <view class="desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
