@@ -51,6 +51,13 @@ spec:
                 name: my-minio
                 port:
                   number: 9000  # 请根据实际服务端口修改
+          - path: /yangsheng
+            pathType: Prefix
+            backend:
+              service:
+                name: my-minio
+                port:
+                  number: 9000  # 请根据实际服务端口修改
           - path: /api/add_recycle
             pathType: Prefix
             backend:
@@ -105,6 +112,13 @@ spec:
             backend:
               service:
                 name: maoning-maoshashiyong-server
+                port:
+                  number: 5000  # 请根据实际服务端口修改
+          - path: /api/yangsheng/yangshengshiping
+            pathType: Prefix
+            backend:
+              service:
+                name: yangsheng-yangshengshiping-server
                 port:
                   number: 5000  # 请根据实际服务端口修改
   tls:
